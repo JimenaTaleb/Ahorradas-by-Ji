@@ -63,6 +63,50 @@
                 </div>
             </div>
         </section>
+        <!-- Continuo con la SECCION FILTROS -->
+        <section class="w-4/5 border mb-0 rounded-lg mx-auto shadow-md p-2 bg-stone-50 mb-8 p-3" id="section--filters">
+            <div class="flex flex-row mb-4 justify-between items-center">
+                <h3 class="text-2xl font-bold mb-3 p-3">Filtros</h3>
+                <a href="" class="text-blue-500 hover:text-black">Ocultar filtros</a>
+            </div>
+            <div>
+                <div class="flex flex-col mb-3">
+                    <label for="tipe--select" class="text-base font-bold mb-2">Tipo</label>
+                    <select id="tipe--select" class="w-full h-10 border rounded-md p-2">
+                        <option value="TODOS">Todos</option>
+                        <option value="GASTO">Gasto</option>
+                        <option value="GANANCIA">Ganancia</option>
+                    </select>
+                </div>
+                <div class="flex flex-col mb-3">
+                    <label class="text-base font-bold mb-2" for="category--select">Categoría</label>
+                    <select class="w-full h-10 border rounded-md p-2" id="category--select">
+                        <option selected>Todas</option>
+                        <option>Comidas</option>
+                        <option>Servicios</option>
+                        <option>Salidas</option>
+                        <option>Educación</option>
+                        <option>Transporte</option>
+                        <option>Trabajo</option>
+                    </select>
+                </div>
+                <div class="flex flex-col mb-3">
+                    <label class="label text-base font-bold mb-2" for="date--select">Desde</label>
+                    <input class="w-full h-10 border rounded-md p-2" type="date" name="" id="date--select" />
+                </div>
+                <div class="flex flex-col mb-3">
+                    <label class="label text-base font-bold mb-2" for="order--select" id="">Ordenar por</label>
+                    <select id="order--select" class="w-full h-10 border rounded-md p-2">
+                        <option value="MAS_RECIENTES">Más reciente</option>
+                        <option value="MENOS_RECIENTES">Menos reciente</option>
+                        <option value="MAYOR_MONTO">Mayor monto</option>
+                        <option value="MENOR_MONTO">Menor monto</option>
+                        <option value="A/Z">A/Z</option>
+                        <option value="Z/A">Z/A</option>
+                    </select>
+                </div>
+            </div>
+        </section>
     </main>
 
 
