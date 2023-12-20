@@ -12,34 +12,32 @@
 <body class="font-sans bg-gray-100 font-sans text-gray-600">
     <!-- Comienzo por el header y la barra de navegacion -->
     <header class="bg-teal-400 p-4 text-white flex items-center justify-between lg:py-7">
-        <div class="container mx-auto flex items-center space-x-3.5 ml-4">
+        <div class="flex items-center space-x-3.5 ml-4">
             <i class="fa-solid fa-wallet text-3xl lg:text-4xl"></i>
             <a href="index.html">
                 <h1 class="text-3xl font-semibold hover:bg-teal-500 hover:text-white p-2 rounded lg:text-4xl">AhorrADAs
                 </h1>
             </a>
         </div>
-        <div class="hidden lg:flex items-center space-x-4 mr-4">
+        <nav class="hidden lg:flex items-center space-x-4 mr-4">
             <ul class="flex space-x-4">
                 <li class="lg:pl-px flex">
-                    <a href="#"
-                        class="flex items-center transition duration-300 hover:bg-teal-500 hover:text-white p-2 rounded"><i
+                    <a href="#" class="flex items-center hover:bg-teal-500 hover:text-white p-2 rounded"><i
                             class="fa-solid fa-chart-line mr-2"></i>Balance</a>
                 </li>
                 <li class="flex-row">
-                    <a href="#"
-                        class="flex items-center transition duration-300 hover:bg-teal-500 hover:text-white p-2 rounded"><i
+                    <a href="#" class="flex items-center hover:bg-teal-500 hover:text-white p-2 rounded"><i
                             class="fa-solid fa-tag mr-2"></i>Categorias</a>
                 </li>
                 <li class="flex-row">
-                    <a href="#"
-                        class="flex items-center transition duration-300 hover:bg-teal-500 hover:text-white p-2 rounded"><i
+                    <a href="#" class="flex items-center hover:bg-teal-500 hover:text-white p-2 rounded"><i
                             class="fa-solid fa-chart-pie mr-2"></i>Reportes</a>
                 </li>
             </ul>
-        </div>
-        <div class="lg:hidden">
-            <i class="fa-solid fa-bars text-xl"></i>
+        </nav>
+        <div>
+            <i class="fa-solid fa-bars text-xl lg:hidden"></i>
+            <i class="fa-solid fa-xmark text-xl hidden"></i>
         </div>
     </header>
     <main class="lg:w-5/6 xl:w-3/5 mx-auto">
