@@ -78,12 +78,18 @@ const showFormEdit = (operationId) =>{
 const initializeApp = () =>{
     setData("operations", allOperations)
     renderOperations(allOperations)
-    
+
   // EVENTOS
   //Abrir menu responsive
   $("#btn--open-nav").addEventListener("click", ()=>{
     showElement(["#nav--bar", "#btn--close-nav"])
     hideElement(["#btn--open-nav"])
+  })
+  
+  //Cerrar menu responsive
+  $("#btn--close-nav").addEventListener("click", ()=>{
+    hideElement(["#nav--bar", "#btn--close-nav"])
+    showElement(["#btn--open-nav"])
   })
 
   //Agregar operacion
