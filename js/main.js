@@ -49,3 +49,15 @@ const renderOperations = (operations) => {
       `;
     }
   };
+
+//Guardar la info (inputs) de las operaciones
+const saveOperationInfo = () =>{
+    return {
+      id: randomIdGenerator(),
+      description: $("#input--description").value,
+      category: $("#input--category").value,
+      date: $("#input--date").valueAsDate,
+      amount: $("#input--amount").valueAsNumber,
+      type: $("#input--type").value
+    }
+  }  
