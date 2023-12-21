@@ -61,3 +61,16 @@ const saveOperationInfo = () =>{
       type: $("#input--type").value
     }
   }  
+
+//Mostrar el formulario para editar operaciones
+const showFormEdit = (operationId) =>{
+    showElement(["#form--operation", "#btn--edit-operation-form", "#title--operation-edit"])
+    hideElement(["#section--balance", "#section--filters", "#section--operations--results", "#section--operations-no-results", "#btn--submit-operation-form", "#title--operation-new"])
+    $("#btn--edit-operation-form").setAttribute("data-id", operationId)
+    const operationSelected = getData("operations").find(operation => operation.id === operationId)
+    $("#input--description").value = operationSelected.description
+    $("#input--category").value = operationSelected.category
+    $("#input--date").valueAsDate = new Date(operationSelected.date)
+    $("#input--amount").valueAsNumber = operationSelected.amount
+    $("#input--type").value = operationSelected.type
+  }  
