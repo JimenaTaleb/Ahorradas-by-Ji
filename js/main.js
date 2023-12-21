@@ -74,3 +74,37 @@ const showFormEdit = (operationId) =>{
     $("#input--amount").valueAsNumber = operationSelected.amount
     $("#input--type").value = operationSelected.type
   }  
+
+//Funcion inicializar la app
+const initializeApp = () =>{
+    setData("operations", allOperations)
+    renderOperations(allOperations)
+  // EVENTOS
+  //Agregar operacion
+  $("#btn--add-operation").addEventListener("click", () =>{
+    showElement(["#form--operation"])
+    hideElement(["#section--balance", "#section--filters", "#section--operations--results", "#section--operations-no-results", "#btn--edit-operation-form"])
+  })
+  
+  //Eviar la info del formulario Nueva operación
+  $("#btn--submit-operation-form").addEventListener("click", (e) =>{
+    e.preventDefault()
+    const currentData = getData("operations")
+    currentData.push(saveOperationInfo())
+    setData("operations", currentData)
+  })
+  
+  //Editar las operaciones
+  $("#btn--edit-operation-form").addEventListener("click", (e) =>{
+    e.preventDefault()
+    const operationId = $("#btn--edit-operation-form").getAttribute("data-id")
+    const currentData = getData("operations").map(operation =>{
+      if (operation.id === operationId){
+        return saveOperationInfo()
+      }
+      return operation
+    })
+    setData("operations", currentData)
+    window.location.reload()
+  })
+  }  
