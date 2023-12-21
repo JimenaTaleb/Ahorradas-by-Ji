@@ -1,3 +1,7 @@
+//Variables
+//Variable guardar la info de las operaciones
+const allOperations = getData("operations") || []
+
 // Funciones auxiliares
 
 //Funcion selector
