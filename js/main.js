@@ -9,3 +9,10 @@ const showElement = (selectors) => {
       $(selector).classList.remove("hidden")
     }
   }
+
+//Funcion ocultar elementos
+const hideElement = (selectors) => {
+    for (const selector of selectors){
+      $(selector).classList.add("hidden")
+    }
+  }  
