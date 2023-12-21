@@ -22,3 +22,6 @@ const randomIdGenerator = () => self.crypto.randomUUID()
 
 //Funcion traer la info de los arrays (operaciones, categorias) desde local storage
 const getData = (key) => JSON.parse(localStorage.getItem(key))
+
+//Funcion setear la info de los arrays (operaciones, categorias) desde local storage
+const setData = (key, data) => localStorage.setItem(key, JSON.stringify(data))
