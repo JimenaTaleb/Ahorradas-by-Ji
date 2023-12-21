@@ -16,3 +16,6 @@ const hideElement = (selectors) => {
       $(selector).classList.add("hidden")
     }
   }  
+
+//Funcion generador de id´s
+const randomIdGenerator = () => self.crypto.randomUUID()  
