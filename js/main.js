@@ -108,3 +108,5 @@ const initializeApp = () =>{
     window.location.reload()
   })
   }  
+
+  window.addEventListener("load", initializeApp)  
