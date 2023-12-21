@@ -1,7 +1,3 @@
-//Variables
-//Variable guardar la info de las operaciones
-const allOperations = getData("operations") || []
-
 // Funciones auxiliares
 
 //Funcion selector
@@ -29,6 +25,9 @@ const getData = (key) => JSON.parse(localStorage.getItem(key))
 
 //Funcion setear la info de los arrays (operaciones, categorias) desde local storage
 const setData = (key, data) => localStorage.setItem(key, JSON.stringify(data))
+
+//Variable guardar la info de las operaciones
+const allOperations = getData("operations") || []
 
 // Funciones principales
 
