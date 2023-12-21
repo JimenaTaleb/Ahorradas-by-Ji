@@ -97,6 +97,16 @@ const initializeApp = () =>{
     showElement(["#btn--open-nav"])
   })
 
+  //Cerrar ventana modal
+  $("#btn--close-modal").addEventListener("click", () =>{
+    hideElement(["#modal--delete"])
+  })
+
+  //Cerrar ventana modal bis
+  $("#btn--close-modal-bis").addEventListener("click", () =>{
+    hideElement(["#modal--delete"])
+  })
+
   //Agregar operacion
   $("#btn--add-operation").addEventListener("click", () =>{
     showElement(["#form--operation"])
