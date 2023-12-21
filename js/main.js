@@ -17,6 +17,11 @@ const hideElement = (selectors) => {
     }
   }  
 
+//Mostrar ventana modal
+const showModalDeleteOperation = () =>{
+    showElement(["#modal--delete"])
+  }  
+
 //Funcion generador de id´s
 const randomIdGenerator = () => self.crypto.randomUUID()  
 
@@ -42,7 +47,7 @@ const renderOperations = (operations) => {
          <td class="w-1/2 text-2xl mt-4 lg:text-right">${operation.amount}</td>
          <td class="w-1/2 text-right lg:text-right">
              <button onclick="showFormEdit('${operation.id}')"><i class="fa-regular fa-pen-to-square text-xs mt-4 bg-green-500 text-white py-1 px-2 rounded-md ml-2"></i></button>
-             <button><i class="fa-solid fa-trash text-xs mt-4 bg-red-500 text-white py-1 px-2 rounded-md ml-2"></i></button>
+             <button onclick="showModalDeleteOperation()"><i class="fa-solid fa-trash text-xs mt-4 bg-red-500 text-white py-1 px-2 rounded-md ml-2"></i></button>
          </td>
       </tr>
       `;
