@@ -27,7 +27,7 @@
                     <a href="#" class=""><i class="fa-solid fa-chart-line mr-2"></i>Balance</a>
                 </li>
                 <li class="hover:bg-gray-100 hover:text-sky-500 pb-2 lg:hover:bg-teal-500 lg:hover:text-white lg:p-1">
-                    <a href="#" class=""><i class="fa-solid fa-tag mr-2"></i>Categorias</a>
+                    <a href="#section--categories" class=""><i class="fa-solid fa-tag mr-2"></i>Categorias</a>
                 </li>
                 <li class="hover:bg-gray-100 hover:text-sky-500 pb-2 lg:hover:bg-teal-500 lg:hover:text-white lg:p-1 ">
                     <a href="#" class=""><i class="fa-solid fa-chart-pie mr-2"></i>Reportes</a>
@@ -197,7 +197,7 @@
 
         </section>
         <!-- Continuo con la SECCION CATEGORIAS (FORMULARIO PARA CREAR O EDITAR OPERACIONES) -->
-        <section class="w-4/5 border mb-0 rounded-lg mx-auto shadow-md p-2 bg-stone-50 mb-8 hidden">
+        <section class="w-4/5 border mb-0 rounded-lg mx-auto shadow-md p-2 bg-stone-50 mb-8" id="section--categories">
             <div class="">
                 <h2 class="text-2xl font-bold mb-4 p-3">Categorías</h2>
                 <h2 class="text-2xl font-bold mb-4 p-3">Editar categoría</h2>
@@ -231,17 +231,22 @@
             <h3 class="text-2xl font-bold mb-4 p-3">Reportes</h3>
         </section>
         <!-- Agrego ventana modal -->
-        <div id="modal--delete" class="hidden fixed left-0 top-0 bg-black bg-opacity-50 w-screen h-screen flex justify-center items-center">
+        <div id="modal--delete"
+            class="hidden fixed left-0 top-0 bg-black bg-opacity-50 w-screen h-screen flex justify-center items-center">
             <div class="bg-white rounded shadow-md p-4 sm:p-8 w-full max-w-md flex flex-col items-center">
-              <div class="flex justify-end mb-4 w-full">
-                <button class="text-red-500"><i class="fa-solid fa-xmark text-xl"></i></button>
-              </div>
-              <h5 class="text-center text-lg mb-4" id="delete--id-operation">Deseas eliminar la operación <span class="delete--id-operation font-bold"></span>?</h5>
-              <h5 class="text-center text-lg mb-4" id="delete--id-category">Deseas eliminar la categoría <span class="delete--id-category font-bold"></span>?</h5>
-              <div class="flex justify-center w-full">
-                <button class="bg-gray-300 text-gray-700 px-4 py-2 mr-2 rounded-md hover:bg-gray-400 mb-2 sm:mb-0 sm:mr-2">Cerrar</button>
-                <button class="bg-red-500 text-white px-4 py-2 rounded-md mb-2 sm:mb-0 sm:mr-2 hover:bg-red-600">Eliminar</button>
-              </div>
+                <div class="flex justify-end mb-4 w-full">
+                    <button class="text-red-500" id="btn--close-modal"><i class="fa-solid fa-xmark text-xl"></i></button>
+                </div>
+                <h5 class="text-center text-lg mb-4" id="title--delete-operation">Deseas eliminar la operación <span
+                        class="delete--id-operation font-bold"></span>?</h5>
+                <h5 class="text-center text-lg mb-4" id="title--delete-category">Deseas eliminar la categoría <span
+                        class="delete--id-category font-bold"></span>?</h5>
+                <div class="flex justify-center w-full">
+                    <button
+                        class="bg-gray-300 text-gray-700 px-4 py-2 mr-2 rounded-md hover:bg-gray-400 mb-2 sm:mb-0 sm:mr-2" id="btn--close-modal-bis">Cerrar</button>
+                    <button
+                        class="bg-red-500 text-white px-4 py-2 rounded-md mb-2 sm:mb-0 sm:mr-2 hover:bg-red-600" id="btn--delete">Eliminar</button>
+                </div>
             </div>
         </div>
 
