@@ -152,50 +152,51 @@
             </div>
         </section>
         <!-- Continuo con la SECCION NUEVA OPERACION (FORMULARIO PARA CREAR O EDITAR OPERACIONES) -->
-        <section class="w-4/5 border mb-0 rounded-lg mx-auto shadow-md p-2 bg-stone-50 mb-8 mt-8 hidden"
-            id="form--operation">
-            <h4 class="text-4xl font-bold mb-4 p-3">Nueva Operacion</h4>
-            <form action="" class="">
-                <div class="mb-4 h-30 flex flex-col justify-between">
-                    <label for="" class="text-base font-bold pb-4">Descripción</label>
-                    <input type="text" id="input--description" class="w-full h-10 border rounded-md p-2"
-                        placeholder="Descripción" required />
-                </div>
-                <div class="mb-4 flex flex-col justify-between">
-                    <label for="" class="text-base font-bold mb-2">Monto</label>
-                    <input type="number" id="input--amount" value="0" class="w-full h-10 border rounded-md p-2"
-                        placeholder="0" required />
-                </div>
-                <div class="mb-4 flex flex-col justify-between">
-                    <label for="" class="text-base font-bold mb-2">Tipo</label>
-                    <select id="input--type" class="w-full h-10 border rounded-md p-2">
-                        <option value="gasto" selected>Gasto</option>
-                        <option value="ganancia">Ganancia</option>
-                    </select>
-                </div>
-                <div class="mb-4 flex flex-col justify-between">
-                    <label for="" class="text-base font-bold mb-2">Categoría</label>
-                    <select class="w-full h-10 border rounded-md p-2" id="input--category">
-                        <option>Comidas</option>
-                        <option>Servicios</option>
-                        <option>Salidas</option>
-                        <option>Educación</option>
-                        <option>Transporte</option>
-                        <option>Trabajo</option>
-                    </select>
-                </div>
-                <div class="mb-4 flex flex-col justify-between">
-                    <label for="" class="text-base font-bold mb-2">Fecha</label>
-                    <input type="date" id="input--date" class="w-full h-10 border rounded-md p-2" />
-                </div>
-                <div class="mb-4 mt-10 text-right">
-                    <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 ml-2"
-                        id="btn--submit-operation-form">Enviar</button>
-                    <button type="" class="" id="btn--edit-operation-form">Editar</button>
-                </div>
-            </form>
-
-        </section>
+        <section class="w-4/5 border mb-0 rounded-lg mx-auto shadow-md p-2 bg-stone-50 mb-8 p-3 mt-8 hidden"
+        id="form--operation">
+        <h4 class="text-4xl font-bold mb-4 p-3" id="title--operation-new">Nueva Operacion</h4>
+        <h4 class=" hidden text-4xl font-bold mb-4 p-3" id="title--operation-edit">Editar Operacion</h4>
+        <form action="" class="">
+          <div class="mb-4 h-30 flex flex-col justify-between">
+            <label for="" class="text-base font-bold pb-4">Descripción</label>
+            <input type="text" id="input--description" class="w-full h-10 border rounded-md p-2" placeholder="Descripción"
+              required />
+          </div>
+          <div class="mb-4 flex flex-col justify-between">
+            <label for="" class="text-base font-bold mb-2">Monto</label>
+            <input type="number" id="input--amount" class="w-full h-10 border rounded-md p-2" placeholder="0" required />
+          </div>
+          <div class="mb-4 flex flex-col justify-between">
+            <label for="" class="text-base font-bold mb-2">Tipo</label>
+            <select id="input--type" class="w-full h-10 border rounded-md p-2">
+              <option value="gasto" selected>Gasto</option>
+              <option value="ganancia">Ganancia</option>
+            </select>
+          </div>
+          <div class="mb-4 flex flex-col justify-between">
+            <label for="" class="text-base font-bold mb-2">Categoría</label>
+            <select class="w-full h-10 border rounded-md p-2" id="input--category">
+              <option>Comidas</option>
+              <option>Servicios</option>
+              <option>Salidas</option>
+              <option>Educación</option>
+              <option>Transporte</option>
+              <option>Trabajo</option>
+            </select>
+          </div>
+          <div class="mb-4 flex flex-col justify-between">
+            <label for="" class="text-base font-bold mb-2">Fecha</label>
+            <input type="date" id="input--date" class="w-full h-10 border rounded-md p-2" />
+          </div>
+          <div class="mb-4 mt-10 text-right">
+            <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 ml-2"
+              id="btn--submit-operation-form">Enviar</button>
+            <button type="" class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 ml-2"
+              id="btn--edit-operation-form">Editar</button>
+          </div>
+        </form>
+  
+      </section>
         <!-- Continuo con la SECCION CATEGORIAS (FORMULARIO PARA CREAR O EDITAR OPERACIONES) -->
         <section class="w-4/5 border mb-0 rounded-lg mx-auto shadow-md p-2 bg-stone-50 mb-8" id="section--categories">
             <div class="">
