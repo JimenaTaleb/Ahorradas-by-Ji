@@ -44,7 +44,7 @@ const renderOperations = (operations) => {
          <td class="w-1/2 text-2xl mt-4 lg:text-right">${operation.amount}</td>
          <td class="w-1/2 text-right lg:text-right">
              <button onclick="showFormEdit('${operation.id}')"><i class="fa-regular fa-pen-to-square text-xs mt-4 bg-green-500 text-white py-1 px-2 rounded-md ml-2"></i></button>
-             <button onclick="showModalDeleteOperation('${operation.id}')"><i class="fa-solid fa-trash text-xs mt-4 bg-red-500 text-white py-1 px-2 rounded-md ml-2"></i></button>
+             <button onclick="showModalDeleteOperation('${operation.id}', '${operation.description}')"><i class="fa-solid fa-trash text-xs mt-4 bg-red-500 text-white py-1 px-2 rounded-md ml-2"></i></button>
          </td>
       </tr>
       `;
@@ -77,10 +77,11 @@ const showFormEdit = (operationId) =>{
   }  
 
  //Mostrar ventana modal
-const showModalDeleteOperation = (operationId) =>{
+const showModalDeleteOperation = (operationId, operationDescription) =>{
     showElement(["#modal--delete"])
     hideElement(["#title--delete-category"])
     $("#btn--delete").setAttribute("data-id", operationId)
+    $(".delete--id-operation").innerText = `${operationDescription}`
     $("#btn--delete").addEventListener("click", () =>{
         const operationId = $("#btn--delete").getAttribute("data-id")
         deleteOperation(operationId)
