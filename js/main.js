@@ -135,6 +135,7 @@ const initializeApp = () =>{
     const currentData = getData("operations")
     currentData.push(saveOperationInfo())
     setData("operations", currentData)
+    $("#form").reset()
   })
   
   //Editar las operaciones
