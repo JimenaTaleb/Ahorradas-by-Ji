@@ -102,6 +102,13 @@ const showModalDeleteOperation = (operationId) =>{
     setData("operations", currentData)
   }
 
+  //Editar operacion
+  const editOperation = () =>{
+
+  }
+
+
+
 
 //Funcion inicializar la app
 const initializeApp = () =>{
@@ -140,6 +147,7 @@ const initializeApp = () =>{
   //Agregar nueva operación
   $("#btn--submit-operation-form").addEventListener("click", (e) =>{
     e.preventDefault()
+    addOperation()
     $("#form").reset()
   })
   
