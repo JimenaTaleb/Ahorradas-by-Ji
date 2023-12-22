@@ -104,7 +104,14 @@ const showModalDeleteOperation = (operationId) =>{
 
   //Editar operacion
   const editOperation = () =>{
-
+    const operationId = $("#btn--edit-operation-form").getAttribute("data-id")
+    const currentData = getData("operations").map(operation =>{
+      if (operation.id === operationId){
+        return saveOperationInfo()
+      }
+      return operation
+    })
+    setData("operations", currentData)
   }
 
 
@@ -154,14 +161,7 @@ const initializeApp = () =>{
   //Editar las operaciones
   $("#btn--edit-operation-form").addEventListener("click", (e) =>{
     e.preventDefault()
-    const operationId = $("#btn--edit-operation-form").getAttribute("data-id")
-    const currentData = getData("operations").map(operation =>{
-      if (operation.id === operationId){
-        return saveOperationInfo()
-      }
-      return operation
-    })
-    setData("operations", currentData)
+    editOperation()
     window.location.reload()
   })
   }  
