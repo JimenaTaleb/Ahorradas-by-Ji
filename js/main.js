@@ -95,6 +95,14 @@ const showModalDeleteOperation = (operationId) =>{
     window.location.reload()
   }
 
+  //Agregar operaciones
+  const addOperation = () =>{
+    const currentData = getData("operations")
+    currentData.push(saveOperationInfo())
+    setData("operations", currentData)
+  }
+
+
 //Funcion inicializar la app
 const initializeApp = () =>{
     setData("operations", allOperations)
@@ -123,18 +131,15 @@ const initializeApp = () =>{
     hideElement(["#modal--delete"])
   })
 
-  //Agregar operacion
+  //Abrir formulario nueva operacion
   $("#btn--add-operation").addEventListener("click", () =>{
     showElement(["#form--operation"])
     hideElement(["#section--balance", "#section--filters", "#section--operations--results", "#section--operations-no-results", "#btn--edit-operation-form"])
   })
   
-  //Eviar la info del formulario Nueva operación
+  //Agregar nueva operación
   $("#btn--submit-operation-form").addEventListener("click", (e) =>{
     e.preventDefault()
-    const currentData = getData("operations")
-    currentData.push(saveOperationInfo())
-    setData("operations", currentData)
     $("#form").reset()
   })
   
