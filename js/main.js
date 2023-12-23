@@ -35,6 +35,8 @@ const allOperations = getData("operations") || []
 
 //Renderizar las operaciones en la tabla 
 const renderOperations = (operations) => {
+  if (operations.length){
+    hideElement(["#section--operations-no-results"])
     for (const operation of operations) {
       $("#operations--table-body").innerHTML += `
       <tr class="flex flex-wrap justify-between lg:flex-nowrap lg:items-center">
@@ -47,9 +49,15 @@ const renderOperations = (operations) => {
              <button onclick="showModalDeleteOperation('${operation.id}', '${operation.description}')"><i class="fa-solid fa-trash text-xs mt-4 bg-red-500 text-white py-1 px-2 rounded-md ml-2"></i></button>
          </td>
       </tr>
-      `;
+      `
     }
-  };
+    } else {
+      showElement(["#section--operations-no-results"])
+      hideElement(["#section--operations--results"])
+    }
+  }
+    
+
 
 //Guardar la info (inputs) de las operaciones
 const saveOperationInfo = (operationId) =>{
