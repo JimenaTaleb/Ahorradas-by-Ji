@@ -136,6 +136,12 @@ const initializeApp = () =>{
     showElement(["#btn--open-nav"])
   })
 
+  //Mostrar seccion categorias
+  $("#btn--go--categories").addEventListener("click", () =>{
+    hideElement(["#section--balance", "#section--filters", "#section--operations--results", "#section--operations-no-results"])
+    showElement(["#section--categories"])
+  })
+
   //Cerrar ventana modal
   $("#btn--close-modal").addEventListener("click", () =>{
     hideElement(["#modal--delete"])
