@@ -52,9 +52,9 @@ const renderOperations = (operations) => {
   };
 
 //Guardar la info (inputs) de las operaciones
-const saveOperationInfo = () =>{
+const saveOperationInfo = (operationId) =>{
     return {
-      id: randomIdGenerator(),
+      id: operationId ? operationId : randomIdGenerator(),
       description: $("#input--description").value,
       category: $("#input--category").value,
       date: $("#input--date").valueAsDate,
@@ -108,7 +108,7 @@ const showModalDeleteOperation = (operationId, operationDescription) =>{
     const operationId = $("#btn--edit-operation-form").getAttribute("data-id")
     const currentData = getData("operations").map(operation =>{
       if (operation.id === operationId){
-        return saveOperationInfo()
+        return saveOperationInfo(operationId)
       }
       return operation
     })
