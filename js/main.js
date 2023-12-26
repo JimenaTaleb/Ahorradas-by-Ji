@@ -89,6 +89,20 @@ const renderOperations = (operations) => {
     }
   }
     
+//Renderizar las categorias en la tabla
+const renderCategoriesTable = (categories) =>{
+  for (const category of categories){
+    $("#categories--table-body").innerHTML += `
+    <tr class="flex flex-wrap justify-between lg:flex-nowrap lg:items-center">
+         <td class="w-1/2 text-base mt-4">${category.categoryName}</td>
+         <td class="w-1/2 text-right lg:text-right">
+             <button><i class="fa-regular fa-pen-to-square text-xs mt-4 bg-green-500 text-white py-1 px-2 rounded-md ml-2"></i></button>
+             <button><i class="fa-solid fa-trash text-xs mt-4 bg-red-500 text-white py-1 px-2 rounded-md ml-2"></i></button>
+         </td>
+      </tr>
+    `
+  }
+}
 
 
 //Guardar la info (inputs) de las operaciones
@@ -163,6 +177,7 @@ const initializeApp = () =>{
     setData("operations", allOperations)
     setData("categories", allCategories)
     renderOperations(allOperations)
+    renderCategoriesTable(allCategories)
 
   // EVENTOS
   //Abrir menu responsive
