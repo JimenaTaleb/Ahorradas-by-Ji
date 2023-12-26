@@ -10,254 +10,274 @@
 </head>
 
 <body class="font-sans bg-gray-100 font-sans text-gray-600">
-    <!-- Comienzo por el header y la barra de navegacion -->
-    <header class="w-full bg-teal-400 p-4 text-white relative flex items-center justify-between">
-        <div class="flex items-center space-x-3.5">
-            <i class="fa-solid fa-wallet text-3xl lg:text-4xl"></i>
-            <a href="index.html">
-                <h1 class="text-3xl font-semibold hover:bg-teal-500 hover:text-white p-2 rounded lg:text-4xl">
-                    AhorrADAs
-                </h1>
-            </a>
+<!-- Header y barra de navegación -->
+<header class="w-full bg-teal-400 p-4 text-white relative flex items-center justify-between">
+    <div class="flex items-center space-x-3.5">
+        <i class="fa-solid fa-wallet text-3xl lg:text-4xl"></i>
+        <a href="index.html">
+            <h1 class="text-3xl font-semibold hover:bg-teal-500 hover:text-white p-2 rounded lg:text-4xl">
+                AhorrADAs
+            </h1>
+        </a>
+    </div>
+    <nav class="absolute w-full top-[84px] left-0 text-gray-600 bg-stone-50 border lg:relative lg:block lg:w-1/3 lg:top-[0px] lg:border-none lg:bg-teal-400 lg:text-white lg:pt-2 lg:pb-0"
+        id="nav--bar">
+        <ul class="m-5 lg:flex lg:flex-row lg:flex-nowrap lg:justify-between lg:pb-2">
+            <li class="hover:bg-gray-100 hover:text-sky-500 pb-2 lg:hover:bg-teal-500 lg:hover:text-white lg:p-1">
+                <a href="index.html" class=""><i class="fa-solid fa-chart-line mr-2"></i>Balance</a>
+            </li>
+            <li class="hover:bg-gray-100 hover:text-sky-500 pb-2 lg:hover:bg-teal-500 lg:hover:text-white lg:p-1"
+                id="btn--go--categories">
+                <a href="#section--categories" class=""><i class="fa-solid fa-tag mr-2"></i>Categorias</a>
+            </li>
+            <li class="hover:bg-gray-100 hover:text-sky-500 pb-2 lg:hover:bg-teal-500 lg:hover:text-white lg:p-1"
+                id="btn--go--reports">
+                <a href="#section--reports" class=""><i class="fa-solid fa-chart-pie mr-2"></i>Reportes</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="lg:hidden">
+        <i class="fa-solid fa-bars text-xl " id="btn--open-nav"></i>
+        <i class="fa-solid fa-xmark text-xl hidden" id="btn--close-nav"></i>
+    </div>
+</header>
+<main class="w-full lg:px-[10%]">
+
+    <!-- Primera sección: BALANCE -->
+    <section class="mt-16 lg:flex lg:flex-row">
+        <div class="lg:flex lg:flex-col lg:w-[30%]">
+            <!-- Panel incicial, balance de operaciones -->
+            <div class="lex flex-col lg:flex-row lg:justify-center" id="section--balance">
+                <div class="w-4/5 border mb-0 rounded-lg mx-auto shadow-md p-2 bg-stone-50 mb-8">
+                    <h2 class="text-3xl font-bold mb-4 p-3">Balance</h2>
+                    <div class="flex justify-between">
+                        <div class="p-3 text-xl">Ganancias</div>
+                        <div class="text-green-500 p-3">+$0</div>
+                    </div>
+                    <div class="flex justify-between">
+                        <div class="p-3 text-xl">Gastos</div>
+                        <div class="text-red-500 p-3">-$0</div>
+                    </div>
+                    <div class="flex justify-between">
+                        <div class="p-3 text-2xl">Total</div>
+                        <div class="p-3 font-bold">$0</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Panel FILTROS -->
+            <div class="w-4/5 border mb-0 rounded-lg mx-auto shadow-md p-2 bg-stone-50 mb-8" id="section--filters">
+                <div class="flex flex-row mb-4 justify-between items-center">
+                    <h3 class="text-2xl font-bold mb-3 p-3">Filtros</h3>
+                    <a href="" class="text-blue-500 hover:text-black">Ocultar filtros</a>
+                </div>
+                <div>
+                    <div class="flex flex-col mb-3">
+                        <label for="type--select" class="text-base font-bold mb-2">Tipo</label>
+                        <select id="type--select" class="w-full h-10 border rounded-md p-2">
+                            <option value="TODOS">Todos</option>
+                            <option value="GASTO">Gasto</option>
+                            <option value="GANANCIA">Ganancia</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col mb-3">
+                        <label class="text-base font-bold mb-2" for="category--select">Categoría</label>
+                        <select class="w-full h-10 border rounded-md p-2" id="category--select">
+                            <option selected>Todas</option>
+                            <option>Comidas</option>
+                            <option>Servicios</option>
+                            <option>Salidas</option>
+                            <option>Educación</option>
+                            <option>Transporte</option>
+                            <option>Trabajo</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col mb-3">
+                        <label class="label text-base font-bold mb-2" for="date--select">Desde</label>
+                        <input class="w-full h-10 border rounded-md p-2" type="date" name="date-select"
+                            id="date--select" />
+                    </div>
+                    <div class="flex flex-col mb-3">
+                        <label class="label text-base font-bold mb-2" for="order--select">Ordenar por</label>
+                        <select id="order--select" class="w-full h-10 border rounded-md p-2">
+                            <option value="MAS_RECIENTES">Más reciente</option>
+                            <option value="MENOS_RECIENTES">Menos reciente</option>
+                            <option value="MAYOR_MONTO">Mayor monto</option>
+                            <option value="MENOR_MONTO">Menor monto</option>
+                            <option value="A/Z">A/Z</option>
+                            <option value="Z/A">Z/A</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
         </div>
-        <nav class="absolute w-full top-[84px] left-0 text-gray-600 bg-stone-50 border lg:w-1/3 lg:top-[0px] lg:left-[850px] lg:border-none lg:bg-teal-400 lg:text-white lg:pt-2 lg:pb-0 lg:items-center min-[2000px]:left-[1600px]"
-            id="nav--bar">
-            <ul class="m-5 lg:flex lg:flex-row lg:flex-nowrap lg:justify-between lg:pb-2">
-                <li class="hover:bg-gray-100 hover:text-sky-500 pb-2 lg:hover:bg-teal-500 lg:hover:text-white lg:p-1">
-                    <a href="#" class=""><i class="fa-solid fa-chart-line mr-2"></i>Balance</a>
-                </li>
-                <li class="hover:bg-gray-100 hover:text-sky-500 pb-2 lg:hover:bg-teal-500 lg:hover:text-white lg:p-1">
-                    <a href="#section--categories" class=""><i class="fa-solid fa-tag mr-2"></i>Categorias</a>
-                </li>
-                <li class="hover:bg-gray-100 hover:text-sky-500 pb-2 lg:hover:bg-teal-500 lg:hover:text-white lg:p-1 ">
-                    <a href="#" class=""><i class="fa-solid fa-chart-pie mr-2"></i>Reportes</a>
-                </li>
-            </ul>
-        </nav>
-        <div>
-            <i class="fa-solid fa-bars text-xl lg:hidden" id="btn--open-nav"></i>
-            <i class="fa-solid fa-xmark text-xl hidden" id="btn--close-nav"></i>
+        <div class="lg:flex lg:w-[70%]">
+            <!-- Panel OPERACIONES SIN RESULTADOS (localStorage sin datos) -->
+            <div class="w-4/5 border mb-0 rounded-lg mx-auto shadow-md p-2 bg-stone-50 mb-8"
+                id="section--operations-no-results">
+                <div class="lg:flex flex-row justify-between items-center lg:ml-0">
+                    <h3 class="text-2xl font-bold mb-4 p-3">Operaciones</h3>
+                    <button type="button" class="bg-teal-400 text-white py-2 px-4 rounded-md hover:bg-teal-500 ml-2"
+                        id="btn--add-operation">
+                        + Nueva operación
+                    </button>
+                </div>
+                <div class="mt-4 text-center">
+                    <figure><img src="img/wallet-flatline.svg" alt="" class="mx-auto h-60" /></figure>
+                    <h4 class="text-2xl font-semibold mt-4 mb-8">Sin resultados</h4>
+                    <p class="text-gray-500 mb-8">Cambia los filtros o agrega operaciones</p>
+                </div>
+            </div>
+
+            <!-- Panel OPERACIONES CON RESULTADOS (operaciones guardadas en localStorage) -->
+            <div class="w-4/5 border mb-0 rounded-lg mx-auto shadow-md p-2 bg-stone-50 mb-8"
+                id="section--operations--results">
+                <div class="lg:flex flex-row justify-between items-center lg:ml-0">
+                    <h3 class="text-2xl font-bold mb-4 p-3">Operaciones</h3>
+                    <button type="button" class="bg-teal-400 text-white py-2 px-4 rounded-md hover:bg-teal-500 ml-2"
+                        id="btn--add-operation-clon">
+                        + Nueva operación
+                    </button>
+                </div>
+                <table class="w-full" id="operations--table">
+                    <thead>
+                        <tr class="hidden lg:block lg:flex lg:justify-items-end">
+                            <th class="lg:w-1/5">Descripción</th>
+                            <th class="lg:w-1/5">Categoría</th>
+                            <th class="lg:w-1/5">Fecha</th>
+                            <th class="lg:w-1/5">Monto</th>
+                            <th class="lg:w-1/5">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="operations--table-body">
+                        <!-- Cuerpo de la tabla sin datos, se renderizan desde localstorage -->
+                    </tbody>
+                </table>
+
+            </div>
         </div>
-    </header>
 
+    </section>
 
-
-
-    <main class="lg:w-5/6 xl:w-3/5 mx-auto mt-40">
-
-        <!-- Comienzo con las secciones, las "pantallas que verá el usuario". SECCION BALANCE -->
-        <section class="mt-16 flex flex-col lg:flex-row lg:justify-center" id="section--balance">
-
-            <div class="w-4/5 border mb-0 rounded-lg mx-auto shadow-md p-2 bg-stone-50 mb-8">
-                <h2 class="text-3xl font-bold mb-4 p-3">Balance</h2>
-                <div class="flex justify-between">
-                    <div class="p-3 text-xl">Ganancias</div>
-                    <div class="text-green-500 p-3">+$0</div>
-                </div>
-                <div class="flex justify-between">
-                    <div class="p-3 text-xl">Gastos</div>
-                    <div class="text-red-500 p-3">-$0</div>
-                </div>
-                <div class="flex justify-between">
-                    <div class="p-3 text-2xl">Total</div>
-                    <div class="p-3 font-bold">$0</div>
-                </div>
-            </div>
-        </section>
-        <!-- Continuo con la SECCION FILTROS -->
-        <section class="w-4/5 border mb-0 rounded-lg mx-auto shadow-md p-2 bg-stone-50 mb-8" id="section--filters">
-            <div class="flex flex-row mb-4 justify-between items-center">
-                <h3 class="text-2xl font-bold mb-3 p-3">Filtros</h3>
-                <a href="" class="text-blue-500 hover:text-black">Ocultar filtros</a>
-            </div>
-            <div>
-                <div class="flex flex-col mb-3">
-                    <label for="type--select" class="text-base font-bold mb-2">Tipo</label>
-                    <select id="type--select" class="w-full h-10 border rounded-md p-2">
-                        <option value="TODOS">Todos</option>
-                        <option value="GASTO">Gasto</option>
-                        <option value="GANANCIA">Ganancia</option>
-                    </select>
-                </div>
-                <div class="flex flex-col mb-3">
-                    <label class="text-base font-bold mb-2" for="category--select">Categoría</label>
-                    <select class="w-full h-10 border rounded-md p-2" id="category--select">
-                        <option selected>Todas</option>
-                        <option>Comidas</option>
-                        <option>Servicios</option>
-                        <option>Salidas</option>
-                        <option>Educación</option>
-                        <option>Transporte</option>
-                        <option>Trabajo</option>
-                    </select>
-                </div>
-                <div class="flex flex-col mb-3">
-                    <label class="label text-base font-bold mb-2" for="date--select">Desde</label>
-                    <input class="w-full h-10 border rounded-md p-2" type="date" name="" id="date--select" />
-                </div>
-                <div class="flex flex-col mb-3">
-                    <label class="label text-base font-bold mb-2" for="order--select" id="">Ordenar por</label>
-                    <select id="order--select" class="w-full h-10 border rounded-md p-2">
-                        <option value="MAS_RECIENTES">Más reciente</option>
-                        <option value="MENOS_RECIENTES">Menos reciente</option>
-                        <option value="MAYOR_MONTO">Mayor monto</option>
-                        <option value="MENOR_MONTO">Menor monto</option>
-                        <option value="A/Z">A/Z</option>
-                        <option value="Z/A">Z/A</option>
-                    </select>
-                </div>
-            </div>
-        </section>
-        <!-- Sigo con la SECCION OPERACIONES SIN RESULTADOS (no se ingresaron aún datos de operaciones) -->
-        <section class="w-4/5 border mb-0 rounded-lg mx-auto shadow-md p-2 bg-stone-50 mb-8"
-            id="section--operations-no-results">
-            <div class="lg:flex flex-row justify-between items-center lg:ml-0">
-                <h3 class="text-2xl font-bold mb-4 p-3">Operaciones</h3>
-                <button type="button" class="bg-teal-400 text-white py-2 px-4 rounded-md hover:bg-teal-500 ml-2"
-                    id="btn--add-operation">
-                    + Nueva operación
-                </button>
-            </div>
-            <div class="mt-4 text-center">
-                <figure><img src="img/wallet-flatline.svg" class="mx-auto h-60" /></figure>
-                <h4 class="text-2xl font-semibold mt-4 mb-8">Sin resultados</h4>
-                <p class="text-gray-500 mb-8">Cambia los filtros o agrega operaciones</p>
-            </div>
-        </section>
-
-        <!-- Sigo con la SECCION OPERACIONES CON RESULTADOS (el usuario previamente ingresó operaciones) -->
-        <section class="w-4/5 border mb-0 rounded-lg mx-auto shadow-md p-2 bg-stone-50 mb-8"
-            id="section--operations--results">
-            <div class="lg:flex flex-row justify-between items-center lg:ml-0">
-                <h3 class="text-2xl font-bold mb-4 p-3">Operaciones</h3>
-                <button type="button" class="bg-teal-400 text-white py-2 px-4 rounded-md hover:bg-teal-500 ml-2"
-                    id="btn--add-operation">
-                    + Nueva operación
-                </button>
-            </div>
-            <table class="w-full" id="operations--table">
-                <thead>
-                    <tr class="hidden">
-                        <th>Descripción</th>
-                        <th>Categoría</th>
-                        <th>Fecha</th>
-                        <th>Monto</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="operations--table-body">
-                    <!-- Esta vacio: no se hardcodean los datos, se renderizan desde localstorage -->
-                </tbody>
-            </table>
-            </div>
-        </section>
-        <!-- Continuo con la SECCION NUEVA OPERACION (FORMULARIO PARA CREAR O EDITAR OPERACIONES) -->
-        <section class="w-4/5 border mb-0 rounded-lg mx-auto shadow-md p-2 bg-stone-50 mb-8 p-3 mt-8 hidden"
+    <!-- SECCION NUEVA OPERACIÓN (FORM PARA CREAR O EDITAR OPERACIONES) -->
+    <section class="w-4/5 border mb-0 rounded-lg mx-auto shadow-md p-2 bg-stone-50 mb-8 p-3 mt-8 hidden"
         id="form--operation">
         <h4 class="text-4xl font-bold mb-4 p-3" id="title--operation-new">Nueva Operacion</h4>
         <h4 class=" hidden text-4xl font-bold mb-4 p-3" id="title--operation-edit">Editar Operacion</h4>
-        <form action="" class="">
-          <div class="mb-4 h-30 flex flex-col justify-between">
-            <label for="" class="text-base font-bold pb-4">Descripción</label>
-            <input type="text" id="input--description" class="w-full h-10 border rounded-md p-2" placeholder="Descripción"
-              required />
-          </div>
-          <div class="mb-4 flex flex-col justify-between">
-            <label for="" class="text-base font-bold mb-2">Monto</label>
-            <input type="number" id="input--amount" class="w-full h-10 border rounded-md p-2" placeholder="0" required />
-          </div>
-          <div class="mb-4 flex flex-col justify-between">
-            <label for="" class="text-base font-bold mb-2">Tipo</label>
-            <select id="input--type" class="w-full h-10 border rounded-md p-2">
-              <option value="gasto" selected>Gasto</option>
-              <option value="ganancia">Ganancia</option>
-            </select>
-          </div>
-          <div class="mb-4 flex flex-col justify-between">
-            <label for="" class="text-base font-bold mb-2">Categoría</label>
-            <select class="w-full h-10 border rounded-md p-2" id="input--category">
-              <option>Comidas</option>
-              <option>Servicios</option>
-              <option>Salidas</option>
-              <option>Educación</option>
-              <option>Transporte</option>
-              <option>Trabajo</option>
-            </select>
-          </div>
-          <div class="mb-4 flex flex-col justify-between">
-            <label for="" class="text-base font-bold mb-2">Fecha</label>
-            <input type="date" id="input--date" class="w-full h-10 border rounded-md p-2" />
-          </div>
-          <div class="mb-4 mt-10 text-right">
-            <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 ml-2"
-              id="btn--submit-operation-form">Enviar</button>
-            <button type="" class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 ml-2"
-              id="btn--edit-operation-form">Editar</button>
-          </div>
-        </form>
-  
-      </section>
-        <!-- Continuo con la SECCION CATEGORIAS (FORMULARIO PARA CREAR O EDITAR CATEGORIAS) -->
-        <section class="w-4/5 border mb-0 rounded-lg mx-auto shadow-md p-2 bg-stone-50 mb-8" id="section--categories">
-            <div>
-                <h2 class="text-2xl font-bold mb-4 p-3 md:text-4xl">Categorías</h2>
-                <h2 class="hidden text-2xl font-bold mb-4 p-3 md:text-4xl">Editar categoría</h2>
-                <form action="" class="flex flex-row items-end" id="form--categories">
-                    <div class="flex-grow">
-                        <label class="label mt-6 text-base font-bold mb-2" for="">Nombre</label>
-                        <input class="w-full h-10 border rounded-md p-2" type="text" name="" id="input--category" />
-                    </div>
-                    <button id="btn--add-category" type="button" class="bg-green-500 text-white rounded-md p-2 hover:bg-green-600 ml-2">Agregar</button>
-                </form>
+        <form action="" class="" id="form">
+            <div class="mb-4 h-30 flex flex-col justify-between">
+                <label for="" class="text-base font-bold pb-4">Descripción</label>
+                <input type="text" id="input--description" class="w-full h-10 border rounded-md p-2"
+                    placeholder="Descripción" required />
             </div>
-            <!-- Se muestran las categorias que ingreso el usuario -->
-            <table class="w-full" id="categories--table">
-                <thead>
-                    <tr class="hidden">
-                        <th>Nombre</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="categories--table-body">
+            <div class="mb-4 flex flex-col justify-between">
+                <label for="" class="text-base font-bold mb-2">Monto</label>
+                <input type="number" id="input--amount" class="w-full h-10 border rounded-md p-2" placeholder="0"
+                    required />
+            </div>
+            <div class="mb-4 flex flex-col justify-between">
+                <label for="" class="text-base font-bold mb-2">Tipo</label>
+                <select id="input--type" class="w-full h-10 border rounded-md p-2">
+                    <option value="gasto" selected>Gasto</option>
+                    <option value="ganancia">Ganancia</option>
+                </select>
+            </div>
+            <div class="mb-4 flex flex-col justify-between">
+                <label for="" class="text-base font-bold mb-2">Categoría</label>
+                <select class="w-full h-10 border rounded-md p-2" id="input--category">
+                    <option>Comidas</option>
+                    <option>Servicios</option>
+                    <option>Salidas</option>
+                    <option>Educación</option>
+                    <option>Transporte</option>
+                    <option>Trabajo</option>
+                </select>
+            </div>
+            <div class="mb-4 flex flex-col justify-between">
+                <label for="" class="text-base font-bold mb-2">Fecha</label>
+                <input type="date" id="input--date" class="w-full h-10 border rounded-md p-2" />
+            </div>
+            <div class="mb-4 mt-10 text-right">
+                <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 ml-2"
+                    id="btn--submit-operation-form">Enviar</button>
+                <button type="" class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 ml-2"
+                    id="btn--edit-operation-form">Editar</button>
+            </div>
+        </form>
 
-                </tbody>
-            </table>
-        </section>
-        <!-- Sigo con la SECCION REPORTES SIN DATOS-->
-        <section class="w-4/5 border mb-0 rounded-lg mx-auto shadow-md p-2 bg-stone-50 mb-8 hidden">
+    </section>
+    <!-- SECCION CATEGORIAS (FORM PARA CREAR O EDITAR CATEGORÍAS) -->
+    <section class="hidden w-4/5 border mb-0 rounded-lg mx-auto shadow-md p-2 bg-stone-50 mb-8"
+        id="section--categories">
+        <div>
+            <h2 class="text-2xl font-bold mb-4 p-3 md:text-4xl">Categorías</h2>
+            <h2 class="hidden text-2xl font-bold mb-4 p-3 md:text-4xl">Editar categoría</h2>
+            <form action="" class="flex flex-row items-end" id="form--categories">
+                <div class="flex-grow">
+                    <label class="label mt-6 text-base font-bold mb-2" for="">Nombre</label>
+                    <input class="w-full h-10 border rounded-md p-2" type="text" name="" id="input--category" />
+                </div>
+                <button id="btn--add-category" type="button"
+                    class="bg-green-500 text-white rounded-md p-2 hover:bg-green-600 ml-2">Agregar</button>
+            </form>
+        </div>
+        <!-- Se muestran las categorias que ingreso el usuario -->
+        <table class="w-full" id="categories--table">
+            <thead>
+                <tr class="hidden">
+                    <th>Nombre</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="categories--table-body">
+
+            </tbody>
+        </table>
+    </section>
+    <!-- SECCION REPORTES-->
+    <section class="hidden" id="section--reports">
+        <!-- PanEL reportes SIN DATOS -->
+        <div class="w-4/5 border mb-0 rounded-lg mx-auto shadow-md p-2 bg-stone-50 mb-8">
             <h3 class="text-2xl font-bold mb-4 p-3">Reportes</h3>
             <div class="mt-4 text-center">
                 <figure><img src="img/undraw_file_analysis_8k9b.svg" class="mx-auto h-60" /></figure>
                 <h4 class="text-2xl font-semibold mt-4 mb-8">Operaciones insuficientes</h4>
                 <p class="text-gray-500 mb-8">Prueba agregando más operaciones</p>
             </div>
-        </section>
-
-        <!-- Ultima SECCION, REPORTES CON DATOS-->
-        <section class="w-4/5 border mb-0 rounded-lg mx-auto shadow-md p-2 bg-stone-50 mb-8 p-3 hidden">
-            <h3 class="text-2xl font-bold mb-4 p-3">Reportes</h3>
-        </section>
-        <!-- Agrego ventana modal -->
-        <div id="modal--delete"
-            class="hidden fixed left-0 top-0 bg-black bg-opacity-50 w-screen h-screen flex justify-center items-center">
-            <div class="bg-white rounded shadow-md p-4 sm:p-8 w-full max-w-md flex flex-col items-center">
-                <div class="flex justify-end mb-4 w-full">
-                    <button class="text-red-500" id="btn--close-modal"><i class="fa-solid fa-xmark text-xl"></i></button>
-                </div>
-                <h5 class="text-center text-lg mb-4" id="title--delete-operation">Deseas eliminar la operación <span
-                        class="delete--id-operation font-bold"></span>?</h5>
-                <h5 class="text-center text-lg mb-4" id="title--delete-category">Deseas eliminar la categoría <span
-                        class="delete--id-category font-bold"></span>?</h5>
-                <div class="flex justify-center w-full">
-                    <button
-                        class="bg-gray-300 text-gray-700 px-4 py-2 mr-2 rounded-md hover:bg-gray-400 mb-2 sm:mb-0 sm:mr-2" id="btn--close-modal-bis">Cerrar</button>
-                    <button
-                        class="bg-red-500 text-white px-4 py-2 rounded-md mb-2 sm:mb-0 sm:mr-2 hover:bg-red-600" id="btn--delete">Eliminar</button>
-                </div>
-            </div>
         </div>
 
-    </main>
+        <!-- PaNEL REPORTES CON DATOS-->
+        <div class="w-4/5 border mb-0 rounded-lg mx-auto shadow-md p-2 bg-stone-50 mb-8 p-3">
+            <h3 class="text-2xl font-bold mb-4 p-3">Reportes</h3>
+        </div>
+    </section>
+    <!-- ventana modal -->
+    <div id="modal--delete"
+        class="hidden fixed left-0 top-0 bg-black bg-opacity-50 w-screen h-screen flex justify-center items-center">
+        <div class="bg-white rounded shadow-md p-4 sm:p-8 w-full max-w-md flex flex-col items-center">
+            <div class="flex justify-end mb-4 w-full">
+                <button class="text-red-500" id="btn--close-modal"><i
+                        class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <h5 class="text-center text-lg mb-4" id="title--delete-operation">Deseas eliminar la operación <span
+                    class="delete--id-operation font-bold"></span>?</h5>
+            <h5 class="text-center text-lg mb-4" id="title--delete-category">Deseas eliminar la categoría <span
+                    class="delete--id-category font-bold"></span>?</h5>
+            <div class="flex justify-center w-full">
+                <button
+                    class="bg-gray-300 text-gray-700 px-4 py-2 mr-2 rounded-md hover:bg-gray-400 mb-2 sm:mb-0 sm:mr-2"
+                    id="btn--close-modal-bis">Cerrar</button>
+                <button class="bg-red-500 text-white px-4 py-2 rounded-md mb-2 sm:mb-0 sm:mr-2 hover:bg-red-600"
+                    id="btn--delete">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+
+
+
+    
 
     <script src="js/main.js"></script>
 </body>
