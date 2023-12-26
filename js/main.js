@@ -161,6 +161,7 @@ const showModalDeleteOperation = (operationId, operationDescription) =>{
 //Funcion inicializar la app
 const initializeApp = () =>{
     setData("operations", allOperations)
+    setData("categories", allCategories)
     renderOperations(allOperations)
 
   // EVENTOS
