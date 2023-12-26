@@ -96,7 +96,7 @@ const renderCategoriesTable = (categories) =>{
          <td class="w-1/2 text-base mt-4">${category.categoryName}</td>
          <td class="w-1/2 text-right lg:text-right">
              <button onclick="showFormCategoryEdit('${category.id}')"><i class="fa-regular fa-pen-to-square text-xs mt-4 bg-green-500 text-white py-1 px-2 rounded-md ml-2"></i></button>
-             <button><i class="fa-solid fa-trash text-xs mt-4 bg-red-500 text-white py-1 px-2 rounded-md ml-2"></i></button>
+             <button onclick="showModalDeleteCategory('${category.id}', '${category.categoryName}')"><i class="fa-solid fa-trash text-xs mt-4 bg-red-500 text-white py-1 px-2 rounded-md ml-2"></i></button>
          </td>
       </tr>
     `
@@ -216,6 +216,26 @@ const showModalDeleteOperation = (operationId, operationDescription) =>{
       });
       setData("categories", currentData);
     };
+
+     //Mostrar ventana modal para eliminar categorias
+const showModalDeleteCategory = (categoryId, categoryName) =>{
+  showElement(["#modal--delete", "#title--delete-category"])
+  hideElement(["#title--delete-operation"])
+  $("#btn--delete").setAttribute("data-id", categoryId)
+  $(".delete--id-category").innerText = `${categoryName}`
+  $("#btn--delete").addEventListener("click", () =>{
+      const categoryId = $("#btn--delete").getAttribute("data-id")
+      deleteCategory(categoryId)
+ 
+  })
+} 
+
+//Eliminar categorías
+const deleteCategory = (categoryId) => {
+  const currentData = getData("operations").filter(operation => operation.category !== categoryId);
+  setData("operations", currentData);
+  window.location.reload();
+};
 
 
 
