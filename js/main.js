@@ -281,6 +281,12 @@ const initializeApp = () =>{
     showElement(["#form--operation"])
     hideElement(["#section--balance", "#section--filters", "#section--operations--results", "#section--operations-no-results", "#btn--edit-operation-form"])
   })
+
+   //Abrir formulario nueva operacion bis
+   $("#btn--add-operation-clon").addEventListener("click", () =>{
+    showElement(["#form--operation"])
+    hideElement(["#section--balance", "#section--filters", "#section--operations--results", "#section--operations-no-results", "#btn--edit-operation-form"])
+  })
   
   //Agregar nueva operación
   $("#btn--submit-operation-form").addEventListener("click", (e) =>{
