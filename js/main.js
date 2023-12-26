@@ -70,10 +70,11 @@ const renderOperations = (operations) => {
   if (operations.length){
     hideElement(["#section--operations-no-results"])
     for (const operation of operations) {
+      const categorySelected = getData("categories").find(category => category.id === operation.category)
       $("#operations--table-body").innerHTML += `
       <tr class="flex flex-wrap justify-between lg:flex-nowrap lg:items-center">
          <td class="w-1/2 text-base mt-4">${operation.description}</td>
-         <td class="w-1/2 text-xs mt-4 text-right lg:text-center"><span class="my-1 rounded bg-green-100 mt-4">${operation.category}</span></td>
+         <td class="w-1/2 text-xs mt-4 text-right lg:text-center"><span class="my-1 rounded bg-green-100 mt-4">${categorySelected.categoryName}</span></td>
          <td class="hidden lg:flex lg:w-1/2 lg:text-center">${operation.date}</td>
          <td class="w-1/2 text-2xl mt-4 lg:text-right">${operation.amount}</td>
          <td class="w-1/2 text-right lg:text-right">
@@ -119,7 +120,7 @@ const saveOperationInfo = (operationId) =>{
     return {
       id: operationId ? operationId : randomIdGenerator(),
       description: $("#input--description").value,
-      category: $("#category--select").value,
+      category: $("#category--form-select").value,
       date: $("#input--date").valueAsDate,
       amount: $("#input--amount").valueAsNumber,
       type: $("#input--type").value
