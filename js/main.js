@@ -125,7 +125,15 @@ const saveOperationInfo = (operationId) =>{
       amount: $("#input--amount").valueAsNumber,
       type: $("#input--type").value
     }
-  }  
+  } 
+  
+ //Guardar la info (input) de las categorias
+ const saveCategoryInfo = (categoryId) => {
+  return {
+    id: categoryId ? categoryId : randomIdGenerator(),
+    categoryName: $("#input--category").value,
+  };
+}; 
 
 //Mostrar el formulario para editar operaciones
 const showFormEdit = (operationId) =>{
@@ -178,7 +186,6 @@ const showModalDeleteOperation = (operationId, operationDescription) =>{
     })
     setData("operations", currentData)
   }
-
 
 
 
