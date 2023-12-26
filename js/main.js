@@ -187,6 +187,13 @@ const showModalDeleteOperation = (operationId, operationDescription) =>{
     setData("operations", currentData)
   }
 
+  //Agregar categorias
+  const addCategory = () => {
+    const currentData = getData("categories");
+    currentData.push(saveCategoryInfo())
+    setData("categories", currentData)
+  };
+
 
 
 //Funcion inicializar la app
@@ -245,6 +252,12 @@ const initializeApp = () =>{
     editOperation()
     window.location.reload()
   })
+
+  //Agregar categorías
+  $("#btn--add-category").addEventListener("click", () => {
+    addCategory();
+    window.location.reload();
+  });
   }  
 
   window.addEventListener("load", initializeApp)  
