@@ -104,6 +104,15 @@ const renderCategoriesTable = (categories) =>{
   }
 }
 
+//Renderizar las categorias en el formulario para crear o editar
+const renderCategoriesFormOptions = (categories) =>{
+  for (const category of categories){
+    $("#category--form-select").innerHTML += `
+    <option value="${category.id}">${category.categoryName}</option>
+    `
+  }
+}
+
 
 //Guardar la info (inputs) de las operaciones
 const saveOperationInfo = (operationId) =>{
@@ -178,6 +187,7 @@ const initializeApp = () =>{
     setData("categories", allCategories)
     renderOperations(allOperations)
     renderCategoriesTable(allCategories)
+    renderCategoriesFormOptions(allCategories)
 
   // EVENTOS
   //Abrir menu responsive
