@@ -64,7 +64,7 @@ const saveOperationInfo = (operationId) =>{
     return {
       id: operationId ? operationId : randomIdGenerator(),
       description: $("#input--description").value,
-      category: $("#input--category").value,
+      category: $("#category--select").value,
       date: $("#input--date").valueAsDate,
       amount: $("#input--amount").valueAsNumber,
       type: $("#input--type").value
