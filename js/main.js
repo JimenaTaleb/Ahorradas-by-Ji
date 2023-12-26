@@ -1,4 +1,4 @@
-// Funciones auxiliares
+// Funciones auxiliares:
 
 //Funcion selector
 const $ = (selector) => document.querySelector(selector);
@@ -17,8 +17,6 @@ const hideElement = (selectors) => {
     }
   }  
 
- 
-
 //Funcion generador de id´s
 const randomIdGenerator = () => self.crypto.randomUUID()  
 
@@ -28,7 +26,7 @@ const getData = (key) => JSON.parse(localStorage.getItem(key))
 //Funcion setear la info de los arrays (operaciones, categorias) desde local storage
 const setData = (key, data) => localStorage.setItem(key, JSON.stringify(data))
 
-//Variable guardar las categorías por defecto
+//Variable para guardar las categorías por defecto
 const defaultCategories = [
   {
     id: randomIdGenerator(),
@@ -56,14 +54,14 @@ const defaultCategories = [
   }
 ]
 
-//Variable guardar la info de las operaciones
+//Variable para guardar la info de las operaciones
 const allOperations = getData("operations") || []
 
-//Variable guardar las categorias por defecto en localStorage
+//Variable para guardar las categorias por defecto en localStorage
 const allCategories = getData("categories") || defaultCategories
 
 
-// Funciones principales
+// Funciones principales:
 
 //Renderizar las operaciones en la tabla 
 const renderOperations = (operations) => {
@@ -97,7 +95,7 @@ const renderCategoriesTable = (categories) =>{
     <tr class="flex flex-wrap justify-between lg:flex-nowrap lg:items-center">
          <td class="w-1/2 text-base mt-4">${category.categoryName}</td>
          <td class="w-1/2 text-right lg:text-right">
-             <button><i class="fa-regular fa-pen-to-square text-xs mt-4 bg-green-500 text-white py-1 px-2 rounded-md ml-2"></i></button>
+             <button onclick="showFormCategoryEdit('${category.id}')"><i class="fa-regular fa-pen-to-square text-xs mt-4 bg-green-500 text-white py-1 px-2 rounded-md ml-2"></i></button>
              <button><i class="fa-solid fa-trash text-xs mt-4 bg-red-500 text-white py-1 px-2 rounded-md ml-2"></i></button>
          </td>
       </tr>
@@ -127,14 +125,7 @@ const saveOperationInfo = (operationId) =>{
     }
   } 
   
- //Guardar la info (input) de las categorias
- const saveCategoryInfo = (categoryId) => {
-  return {
-    id: categoryId ? categoryId : randomIdGenerator(),
-    categoryName: $("#input--category").value,
-  };
-}; 
-
+ 
 //Mostrar el formulario para editar operaciones
 const showFormEdit = (operationId) =>{
     showElement(["#form--operation", "#btn--edit-operation-form", "#title--operation-edit"])
@@ -187,12 +178,44 @@ const showModalDeleteOperation = (operationId, operationDescription) =>{
     setData("operations", currentData)
   }
 
+//Guardar la info (input) de las categorias
+ const saveCategoryInfo = (categoryId) => {
+  return {
+    id: categoryId ? categoryId : randomIdGenerator(),
+    categoryName: $("#input--category").value,
+  };
+};
+
   //Agregar categorias
   const addCategory = () => {
     const currentData = getData("categories");
     currentData.push(saveCategoryInfo())
     setData("categories", currentData)
   };
+
+  //Mostrar el formulario para editar categorias
+  const showFormCategoryEdit = (categoryId) => {
+    showElement(["#form--categories", "#title--operation-edit", "#btn--edit-category-form"]);
+    hideElement(["#add--category-title", "#categories--table", "#btn--add-category"]);
+    $("#btn--edit-category-form").setAttribute("data-id", categoryId);
+    const categorySelected = getData("categories").find(category => category.id === categoryId);
+    $("#input--category").value = categorySelected.categoryName;
+  };
+
+    //Editar categorías
+    const editCategory = () => {
+      const categoryId = $("#btn--edit-category-form").getAttribute("data-id");
+      const currentData = getData("categories").map(category => {
+        if (category.id === categoryId) {
+          return {
+            id: categoryId,
+            categoryName: $("#input--category").value
+          };
+        }
+        return category;
+      });
+      setData("categories", currentData);
+    };
 
 
 
@@ -258,6 +281,13 @@ const initializeApp = () =>{
     addCategory();
     window.location.reload();
   });
+
+  //Editar categorías
+  $("#btn--edit-category-form").addEventListener("click", (e) =>{
+    e.preventDefault()
+    editCategory()
+    window.location.reload()
+  })
   }  
 
   window.addEventListener("load", initializeApp)  
