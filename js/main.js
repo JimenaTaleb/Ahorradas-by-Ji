@@ -28,8 +28,40 @@ const getData = (key) => JSON.parse(localStorage.getItem(key))
 //Funcion setear la info de los arrays (operaciones, categorias) desde local storage
 const setData = (key, data) => localStorage.setItem(key, JSON.stringify(data))
 
+//Variable guardar las categorías por defecto
+const defaultCategories = [
+  {
+    id: randomIdGenerator(),
+    categoryName: "Comidas"
+  },
+  {
+    id: randomIdGenerator(),
+    categoryName: "Servicios"
+  },
+  {
+    id: randomIdGenerator(),
+    categoryName: "Salidas"
+  },
+  {
+    id: randomIdGenerator(),
+    categoryName: "Educación"
+  },
+  {
+    id: randomIdGenerator(),
+    categoryName: "Transporte"
+  },
+  {
+    id: randomIdGenerator(),
+    categoryName: "Trabajo"
+  }
+]
+
 //Variable guardar la info de las operaciones
 const allOperations = getData("operations") || []
+
+//Variable guardar las categorias por defecto en localStorage
+const allCategories = getData("categories") || defaultCategories
+
 
 // Funciones principales
 
