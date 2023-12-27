@@ -303,9 +303,45 @@ for (const categoryID in earningsByCategory) {
 }
 
 $("#higher--earnings-category").innerText = highestEarningCategory
-$("#higher--earnings-amount").innerText = highestEarningAmount
+$("#higher--earnings-amount").innerText = `+$${highestEarningAmount}`
 
 };
+
+//Categoría con mayor gasto
+const higherExpenseCategory = (operations) =>  {
+  const allOperations = getData("operations") || [];
+  const allCategories = getData("categories") || [];
+const expensesByCategory = {};
+
+
+for (const operation of allOperations) {
+  if (operation.type === "gasto") {
+    if (expensesByCategory[operation.category]) {
+      expensesByCategory[operation.category] += operation.amount;
+    } else {
+      expensesByCategory[operation.category] = operation.amount;
+    }
+  }
+}
+
+
+let highestExpenseCategory = null;
+let highestExpenseAmount = 0;
+
+for (const categoryID in expensesByCategory) {
+  const categoryName = allCategories.find(category => category.id === categoryID)?.categoryName;
+
+  if (expensesByCategory[categoryID] > highestExpenseAmount) {
+    highestExpenseAmount = expensesByCategory[categoryID];
+    highestExpenseCategory = categoryName;
+  }
+}
+
+$("#higher--expenses-category").innerText = highestExpenseCategory
+$("#higher--expenses-amount").innerText = `-$${highestExpenseAmount}`
+
+};
+
 
 //Funcion inicializar la app
 const initializeApp = () =>{
@@ -316,6 +352,7 @@ const initializeApp = () =>{
     renderCategoriesFormOptions(allCategories)
     updateBalance(allOperations);
     higherEarningsCategory(allOperations)
+    higherExpenseCategory(allOperations)
 
   // EVENTOS
   //Abrir menu responsive
