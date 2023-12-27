@@ -76,9 +76,9 @@ const renderOperations = (operations) => {
       <tr class="flex flex-wrap justify-between lg:flex-nowrap lg:items-center">
          <td class="w-1/2 text-base mt-4">${operation.description}</td>
          <td class="w-1/2 text-xs mt-4 text-right lg:text-center"><span class="my-1 rounded bg-green-100 mt-4">${categorySelected.categoryName}</span></td>
-         <td class="hidden lg:flex lg:w-1/2 lg:text-center">${operation.date}</td>
-         <td class="w-1/2 text-2xl mt-4 lg:text-right">${operation.amount}</td>
-         <td class="w-1/2 text-right lg:text-right">
+         <td class="hidden lg:flex lg:w-1/2 lg:text-center justify-center">${new Date(operation.date).toLocaleDateString('es-ES')}</td>
+         <td class="w-1/2 text-2xl mt-4 lg:text-center">${operation.amount}</td>
+         <td class="w-1/2 text-right lg:text-center">
              <button onclick="showFormEdit('${operation.id}')"><i class="fa-regular fa-pen-to-square text-xs mt-4 bg-green-500 text-white py-1 px-2 rounded-md ml-2"></i></button>
              <button onclick="showModalDeleteOperation('${operation.id}', '${operation.description}')"><i class="fa-solid fa-trash text-xs mt-4 bg-red-500 text-white py-1 px-2 rounded-md ml-2"></i></button>
          </td>
