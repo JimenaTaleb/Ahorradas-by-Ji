@@ -413,6 +413,41 @@ const higherEarningsMonth = () => {
 };
 
 
+//Mes con mayor gasto
+const higherExpenseMonth = () => {
+  const allOperations = getData("operations") || [];
+  const expensesByMonth = {};
+
+  for (const operation of allOperations) {
+    if (operation.type === "gasto") {
+      const operationDate = new Date(operation.date);
+      const monthYear = `${operationDate.getMonth() + 1}-${operationDate.getFullYear()}`;
+
+      if (expensesByMonth[monthYear]) {
+        expensesByMonth[monthYear] += operation.amount;
+      } else {
+        expensesByMonth[monthYear] = operation.amount;
+      }
+    }
+  }
+
+  let highestExpenseMonth = null;
+  let highestExpenseAmount = 0;
+
+  for (const monthYear in expensesByMonth) {
+    const expensesAmount = expensesByMonth[monthYear];
+
+    if (expensesAmount > highestExpenseAmount) {
+      highestExpenseAmount = expensesAmount;
+      highestExpenseMonth = monthYear;
+    }
+  }
+
+  $("#higher--expenses-month").innerText = highestExpenseMonth || "N/A";
+  $("#higher--expenses-month-amount").innerText = `+$${highestExpenseAmount}`;
+};
+
+
 //Funcion inicializar la app
 const initializeApp = () =>{
     setData("operations", allOperations)
@@ -425,6 +460,7 @@ const initializeApp = () =>{
     higherExpenseCategory(allOperations)
     highestBalanceCategory(allOperations)
     higherEarningsMonth(allOperations)
+    higherExpenseMonth(allOperations)
 
 
   // EVENTOS
