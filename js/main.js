@@ -245,7 +245,26 @@ const deleteCategory = (categoryId) => {
   window.location.reload();
 };
 
+//Actualizar balance
+const updateBalance = () => {
+  const allOperations = getData("operations") || [];
+  let totalEarnings = 0;
+  let totalExpenses = 0;
 
+  for (const operation of allOperations) {
+      if (operation.type === "ganancia") {
+          totalEarnings += operation.amount;
+      } else if (operation.type === "gasto") {
+          totalExpenses += operation.amount;
+      }
+  }
+
+  $("#balance--earning").innerText = `+$${totalEarnings}`
+  $("#balance--expense").innerText = `-$${totalExpenses}`
+
+  const totalBalance = totalEarnings - totalExpenses;
+  $("#balance--total").innerText = totalBalance >= 0 ? `+$${totalBalance}` : `-$${totalBalance}`;
+};
 
 //Funcion inicializar la app
 const initializeApp = () =>{
@@ -254,6 +273,7 @@ const initializeApp = () =>{
     renderOperations(allOperations)
     renderCategoriesTable(allCategories)
     renderCategoriesFormOptions(allCategories)
+    updateBalance(allOperations);
 
   // EVENTOS
   //Abrir menu responsive
