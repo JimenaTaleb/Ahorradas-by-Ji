@@ -308,7 +308,7 @@ const initializeApp = () =>{
 
   //Mostrar seccion categorias
   $("#btn--go--categories").addEventListener("click", () =>{
-    hideElement(["#section--balance", "#section--filters", "#section--operations--results", "#section--operations-no-results"])
+    hideElement(["#section--balance", "#section--filters", "#section--operations--results", "#section--operations-no-results", "#section--reports"])
     showElement(["#section--categories"])
   })
 
@@ -359,6 +359,12 @@ const initializeApp = () =>{
     e.preventDefault()
     editCategory()
     window.location.reload()
+  })
+
+  //Abrir ventana reportes
+  $("#btn--go--reports").addEventListener("click", () =>{
+    hideElement(["#section--main-balance", "#section--balance", "#section--filters", "#form--operation", "#section--categories", "#section--operations--results"])
+    showElement(["#section--reports"])
   })
   }  
 
