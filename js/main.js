@@ -378,6 +378,41 @@ const highestBalanceCategory = () => {
 };
 
 
+//Mes con mayor ganancia
+const higherEarningsMonth = () => {
+  const allOperations = getData("operations") || [];
+  const earningsByMonth = {};
+
+  for (const operation of allOperations) {
+    if (operation.type === "ganancia") {
+      const operationDate = new Date(operation.date);
+      const monthYear = `${operationDate.getMonth() + 1}-${operationDate.getFullYear()}`;
+
+      if (earningsByMonth[monthYear]) {
+        earningsByMonth[monthYear] += operation.amount;
+      } else {
+        earningsByMonth[monthYear] = operation.amount;
+      }
+    }
+  }
+
+  let highestEarningMonth = null;
+  let highestEarningAmount = 0;
+
+  for (const monthYear in earningsByMonth) {
+    const earningsAmount = earningsByMonth[monthYear];
+
+    if (earningsAmount > highestEarningAmount) {
+      highestEarningAmount = earningsAmount;
+      highestEarningMonth = monthYear;
+    }
+  }
+
+  $("#higher--earnings-month").innerText = highestEarningMonth || "N/A";
+  $("#higher--earnings-month-amount").innerText = `+$${highestEarningAmount.toFixed(2)}`;
+};
+
+
 //Funcion inicializar la app
 const initializeApp = () =>{
     setData("operations", allOperations)
@@ -389,6 +424,8 @@ const initializeApp = () =>{
     higherEarningsCategory(allOperations)
     higherExpenseCategory(allOperations)
     highestBalanceCategory(allOperations)
+    higherEarningsMonth(allOperations)
+
 
   // EVENTOS
   //Abrir menu responsive
