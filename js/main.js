@@ -342,6 +342,41 @@ $("#higher--expenses-amount").innerText = `-$${highestExpenseAmount}`
 
 };
 
+//Categoría con mayor balance
+const highestBalanceCategory = () => {
+  const allOperations = getData("operations") || [];
+  const allCategories = getData("categories") || [];
+  const balancesByCategory = {};
+
+  for (const operation of allOperations) {
+    const { category, amount, type } = operation;
+
+    if (type === "ganancia" || type === "gasto") {
+      if (balancesByCategory[category]) {
+        balancesByCategory[category] += (type === "ganancia" ? amount : -amount);
+      } else {
+        balancesByCategory[category] = (type === "ganancia" ? amount : -amount);
+      }
+    }
+  }
+
+  let highestBalanceCategory = null;
+  let highestBalanceAmount = 0;
+
+  for (const categoryID in balancesByCategory) {
+    const categoryName = allCategories.find(category => category.id === categoryID)?.categoryName;
+
+    if (balancesByCategory[categoryID] > highestBalanceAmount) {
+      highestBalanceAmount = balancesByCategory[categoryID];
+      highestBalanceCategory = categoryName;
+    }
+  }
+
+
+  $("#higher--balance-category").innerText = highestBalanceCategory || "N/A";
+  $("#higher--balance-amount").innerText = `$${highestBalanceAmount.toFixed(2)}`;
+};
+
 
 //Funcion inicializar la app
 const initializeApp = () =>{
@@ -353,6 +388,7 @@ const initializeApp = () =>{
     updateBalance(allOperations);
     higherEarningsCategory(allOperations)
     higherExpenseCategory(allOperations)
+    highestBalanceCategory(allOperations)
 
   // EVENTOS
   //Abrir menu responsive
