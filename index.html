@@ -68,9 +68,10 @@
                 <div class="w-4/5 border mb-0 rounded-lg mx-auto shadow-md p-2 bg-stone-50 mb-8" id="section--filters">
                     <div class="flex flex-row mb-4 justify-between items-center">
                         <h3 class="text-2xl font-bold mb-3 p-3">Filtros</h3>
-                        <a href="" class="text-blue-500 hover:text-black">Ocultar filtros</a>
+                        <a href="" class="text-blue-500 hover:text-black" id="btn--hide-filters">Ocultar filtros</a>
+                        <a href="" class="hidden text-blue-500 hover:text-black" id="btn--show-filters">Mostrar filtros</a>
                     </div>
-                    <div>
+                    <div id="all--filters">
                         <div class="flex flex-col mb-3">
                             <label for="type--select" class="text-base font-bold mb-2">Tipo</label>
                             <select id="type--select" class="w-full h-10 border rounded-md p-2">

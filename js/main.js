@@ -288,6 +288,20 @@ const initializeApp = () =>{
     showElement(["#btn--open-nav"])
   })
 
+  //Ocultar filtros
+  $("#btn--hide-filters").addEventListener("click", (e) =>{
+    e.preventDefault()
+    hideElement(["#all--filters", "#btn--hide-filters"])
+    showElement(["#btn--show-filters"])
+  })
+
+  //Mostrar filtros
+  $("#btn--show-filters").addEventListener("click", (e) =>{
+    e.preventDefault()
+    showElement(["#all--filters", "#btn--hide-filters"])
+    hideElement(["#btn--show-filters"])
+  })
+
   //Mostrar seccion categorias
   $("#btn--go--categories").addEventListener("click", () =>{
     hideElement(["#section--balance", "#section--filters", "#section--operations--results", "#section--operations-no-results"])
