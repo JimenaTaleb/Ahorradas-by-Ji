@@ -270,6 +270,43 @@ const updateBalance = () => {
   $("#balance--total").innerText = totalBalance >= 0 ? `+$${totalBalance}` : `-$${totalBalance}`;
 };
 
+
+//Reportes
+//Categoría con mayor ganancia
+const higherEarningsCategory = (operations) =>  {
+  const allOperations = getData("operations") || [];
+  const allCategories = getData("categories") || [];
+const earningsByCategory = {};
+
+
+for (const operation of allOperations) {
+  if (operation.type === "ganancia") {
+    if (earningsByCategory[operation.category]) {
+      earningsByCategory[operation.category] += operation.amount;
+    } else {
+      earningsByCategory[operation.category] = operation.amount;
+    }
+  }
+}
+
+
+let highestEarningCategory = null;
+let highestEarningAmount = 0;
+
+for (const categoryID in earningsByCategory) {
+  const categoryName = allCategories.find(category => category.id === categoryID)?.categoryName;
+
+  if (earningsByCategory[categoryID] > highestEarningAmount) {
+    highestEarningAmount = earningsByCategory[categoryID];
+    highestEarningCategory = categoryName;
+  }
+}
+
+$("#higher--earnings-category").innerText = highestEarningCategory
+$("#higher--earnings-amount").innerText = highestEarningAmount
+
+};
+
 //Funcion inicializar la app
 const initializeApp = () =>{
     setData("operations", allOperations)
@@ -278,6 +315,7 @@ const initializeApp = () =>{
     renderCategoriesTable(allCategories)
     renderCategoriesFormOptions(allCategories)
     updateBalance(allOperations);
+    higherEarningsCategory(allOperations)
 
   // EVENTOS
   //Abrir menu responsive
