@@ -444,7 +444,7 @@ const higherExpenseMonth = () => {
   }
 
   $("#higher--expenses-month").innerText = highestExpenseMonth || "N/A";
-  $("#higher--expenses-month-amount").innerText = `+$${highestExpenseAmount}`;
+  $("#higher--expenses-month-amount").innerText = `-$${highestExpenseAmount}`;
 };
 
 
