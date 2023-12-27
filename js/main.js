@@ -103,10 +103,15 @@ const renderCategoriesTable = (categories) =>{
   }
 }
 
-//Renderizar las categorias en el formulario para crear o editar
+//Renderizar las categorias en el form
 const renderCategoriesFormOptions = (categories) =>{
   for (const category of categories){
+    // Renderiza las categorías en el form de agregar o editar
     $("#category--form-select").innerHTML += `
+    <option value="${category.id}">${category.categoryName}</option>
+    `
+    //Renderiza las categorías en el filtro de operaciones
+    $("#category--filter-select").innerHTML += `
     <option value="${category.id}">${category.categoryName}</option>
     `
   }
