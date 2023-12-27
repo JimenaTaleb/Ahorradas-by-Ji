@@ -15,7 +15,10 @@ const hideElement = (selectors) => {
     for (const selector of selectors){
       $(selector).classList.add("hidden")
     }
-  }  
+  }
+  
+//Función para limpiar el contenedor
+  const cleanContainer = (selector) => $(selector).innerHTML = ""
 
 //Funcion generador de id´s
 const randomIdGenerator = () => self.crypto.randomUUID()  
