@@ -175,7 +175,7 @@ const renderOperations = (operations) => {
             break;
     }
     console.log(`Filtro de orden:`, orderFilter, filteredOperations);
-
+    renderOperations()
 
 };
 
@@ -620,7 +620,7 @@ const initializeApp = () =>{
     setData("operations", allOperations)
     setData("categories", allCategories)
     setFilterDate()
-    filterOperations(allOperations);
+    renderOperations(filterOperations)
     renderCategoriesTable(allCategories)
     renderCategoriesFormOptions(allCategories)
     updateBalance(allOperations);
@@ -730,4 +730,4 @@ const initializeApp = () =>{
   })
   }  
 
-  window.addEventListener("load", initializeApp)  
+  window.addEventListener("load", initializeApp)   
