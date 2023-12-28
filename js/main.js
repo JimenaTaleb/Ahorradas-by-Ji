@@ -85,17 +85,18 @@ const allCategories = getData("categories") || defaultCategories
 
 //Renderizar las operaciones en la tabla 
 const renderOperations = (operations) => {
-  const tableBody = $("#operations--table-body");
-  tableBody.innerHTML = "";
+  console.log("Operaciones a renderizar:", operations);
+  $("#operations--table-body").innerHTML = "";
   if (operations.length){
     hideElement(["#section--operations-no-results"])
+    showElement(["#section--operations--results"])
     for (const operation of operations) {
       const categorySelected = getData("categories").find(category => category.id === operation.category)
 
       const amountClass = operation.type === "ganancia" ? 'text-green-500' : 'text-red-500';
       const amountSign = operation.type === "ganancia" ? '+$' : '-$';
 
-      tableBody.innerHTML += `
+      $("#operations--table-body").innerHTML += `
       <tr class="flex flex-wrap justify-between lg:flex-nowrap lg:items-center">
          <td class="w-1/2 text-base mt-4">${operation.description}</td>
          <td class="w-1/2 text-xs mt-4 text-right lg:text-center"><span class="my-1 rounded bg-green-100 mt-4">${categorySelected.categoryName}</span></td>
@@ -118,66 +119,66 @@ const renderOperations = (operations) => {
   //Filtros
   const filterOperations = (operations) => {
     const typeFilter = $("#filter--type-select").value;
-    console.log("Tipo de filtro:", typeFilter);
     const categoryFilter = $("#category--filter-select").value;
     const fromDateFilter = $("#date--select").value;
     const orderFilter = $("#order--select").value;
-
+  
     let filteredOperations = operations;
-
-    // Operaciones antes del filtro de tipo
-    console.log("Operaciones antes del filtro de tipo:", filteredOperations);
-
+  
     // Aplicar filtro por tipo
     if (typeFilter !== "Todos") {
       filteredOperations = filteredOperations.filter(operation => {
         return operation.type.toLowerCase() === typeFilter.toLowerCase();
       });
     }
-    console.log(`se ejecuto el filtro tipo:`, typeFilter, filteredOperations)
-
+  
     // Aplicar filtro por categoría
     if (categoryFilter !== "Todas") {
-        filteredOperations = filteredOperations.filter(operation => {
-            const category = allCategories.find(cat => cat.id === operation.category);
-            return category && category.categoryName === categoryFilter;
-        });
+      filteredOperations = filteredOperations.filter(operation => {
+        const category = allCategories.find(cat => cat.id === operation.category);
+        return category && category.id === categoryFilter;
+      });
     }
-    console.log(`Filtro de categoría:`, categoryFilter, filteredOperations);
-
+  
     // Aplicar filtro por fecha
     if (fromDateFilter) {
-        filteredOperations = filteredOperations.filter(operation => new Date(operation.date) >= new Date(fromDateFilter));
+      filteredOperations = filteredOperations.filter(operation => new Date(operation.date) >= new Date(fromDateFilter));
     }
-    console.log(`Filtro de fecha:`, fromDateFilter, filteredOperations);
-
+  
     // Aplicar ordenamiento
     switch (orderFilter) {
-        case "MAS_RECIENTES":
-            filteredOperations.sort((a, b) => new Date(b.date) - new Date(a.date));
-            break;
-        case "MENOS_RECIENTES":
-            filteredOperations.sort((a, b) => new Date(a.date) - new Date(b.date));
-            break;
-        case "MAYOR_MONTO":
-            filteredOperations.sort((a, b) => b.amount - a.amount);
-            break;
-        case "MENOR_MONTO":
-            filteredOperations.sort((a, b) => a.amount - b.amount);
-            break;
-        case "A/Z":
-            filteredOperations.sort((a, b) => a.description.localeCompare(b.description));
-            break;
-        case "Z/A":
-            filteredOperations.sort((a, b) => b.description.localeCompare(a.description));
-            break;
-        default:
-            break;
+      case "MAS_RECIENTES":
+        filteredOperations.sort((a, b) => new Date(b.date) - new Date(a.date));
+        break;
+      case "MENOS_RECIENTES":
+        filteredOperations.sort((a, b) => new Date(a.date) - new Date(b.date));
+        break;
+      case "MAYOR_MONTO":
+        filteredOperations.sort((a, b) => b.amount - a.amount);
+        break;
+      case "MENOR_MONTO":
+        filteredOperations.sort((a, b) => a.amount - b.amount);
+        break;
+      case "A/Z":
+        filteredOperations.sort((a, b) => a.description.localeCompare(b.description));
+        break;
+      case "Z/A":
+        filteredOperations.sort((a, b) => b.description.localeCompare(a.description));
+        break;
+      default:
+        break;
     }
-    console.log(`Filtro de orden:`, orderFilter, filteredOperations);
-    renderOperations()
+    console.log(filteredOperations);
+  
+    if (filteredOperations.length) {
+      renderOperations(filteredOperations);
+      updateBalance(filteredOperations);
+    } else {
+      showElement(["#section--operations-no-results"]);
+      hideElement(["#section--operations--results"]);
+    }
+  }
 
-};
 
   
     
@@ -337,21 +338,21 @@ const deleteCategory = (categoryId) => {
 };
 
 //Actualizar balance
-const updateBalance = () => {
-  const allOperations = getData("operations") || [];
+const updateBalance = (operations) => {
+  const allOperations = operations || getData("operations") || [];
   let totalEarnings = 0;
   let totalExpenses = 0;
 
   for (const operation of allOperations) {
-      if (operation.type === "ganancia") {
-          totalEarnings += operation.amount;
-      } else if (operation.type === "gasto") {
-          totalExpenses += operation.amount;
-      }
+    if (operation.type === "ganancia") {
+      totalEarnings += operation.amount;
+    } else if (operation.type === "gasto") {
+      totalExpenses += operation.amount;
+    }
   }
 
-  $("#balance--earning").innerText = `+$${totalEarnings}`
-  $("#balance--expense").innerText = `-$${totalExpenses}`
+  $("#balance--earning").innerText = `+$${totalEarnings}`;
+  $("#balance--expense").innerText = `-$${totalExpenses}`;
 
   const totalBalance = totalEarnings - totalExpenses;
   $("#balance--total").innerText = totalBalance >= 0 ? `+$${totalBalance}` : `-$${totalBalance}`;
@@ -620,7 +621,7 @@ const initializeApp = () =>{
     setData("operations", allOperations)
     setData("categories", allCategories)
     setFilterDate()
-    renderOperations(filterOperations)
+    filterOperations(allOperations)
     renderCategoriesTable(allCategories)
     renderCategoriesFormOptions(allCategories)
     updateBalance(allOperations);
@@ -662,10 +663,8 @@ const initializeApp = () =>{
 
   //Filtros
   $("#section--filters").addEventListener("change", () =>{
-    const currentOperations = getData("operations")
-    filterOperations(currentOperations)
-    renderOperations(allOperations)
-    updateBalance()
+    const operationsToFilter = getData("operations")
+    filterOperations(operationsToFilter)
   })
 
   //Mostrar seccion categorias
@@ -728,6 +727,8 @@ const initializeApp = () =>{
     hideElement(["#section--main-balance", "#section--balance", "#section--filters", "#form--operation", "#section--categories", "#section--operations--results"])
     showElement(["#section--reports"])
   })
+
+  filterOperations(allOperations);
   }  
 
   window.addEventListener("load", initializeApp)   
