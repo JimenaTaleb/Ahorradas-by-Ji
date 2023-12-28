@@ -113,70 +113,74 @@ const renderOperations = (operations) => {
   }
 
   //Filtros
-  const filterOperations = () => {
-    // Valores seleccionados de los filtros:
-    const selectedType = $("#type--select").value;
-    const selectedCategory = $("#category--filter-select").value;
-    const rawSelectedDate = $("#date--select").value;
-    const selectedDate = rawSelectedDate ? new Date(rawSelectedDate).toISOString().split('T')[0] : null;
-    const selectedOrder = $("#order--select").value;
-  
-    // Primer filtro: tipo
-    const filterByType = getData("operations").filter((operation) => {
-      if (selectedType === "todos") {
-        return operation;
-      }
-      return selectedType === operation.type;
-    });
-  
-    // Al filtro de tipo, lo filtro de nuevo por categoría:
-    const filterByCategory = filterByType.filter((operation) => {
-      if (selectedCategory === "todas") {
-        return operation;
-      } else {
-        return selectedCategory === getData("categories").find(currentCategory => currentCategory.id === operation.category);
-      }
-    });
-  
-    // Al filtro de tipo y categoría, vuelvo a filtrar por fecha
-    const filterByDate = filterByCategory.filter((operation) => {
-      if (!selectedDate) {
-        return true; // No hay fecha seleccionada, no se aplica este filtro
-      }
-      return new Date(operation.date) >= new Date(selectedDate);
-    });
-  
-    // Último filtro: orden
-    const filterByOrder = filterByDate.sort((a, b) => {
-      if (selectedOrder === "mas-reciente") {
-        return new Date(b.date) - new Date(a.date);
-      }
-      if (selectedOrder === "menos-reciente") {
-        return new Date(a.date) - new Date(b.date);
-      }
-      if (selectedOrder === "mayor-monto") {
-        return b.amount - a.amount;
-      }
-      if (selectedOrder === "menor-monto") {
-        return a.amount - b.amount;
-      }
-      if (selectedOrder === "a-z") {
-        return a.description.localeCompare(b.description);
-      }
-      if (selectedOrder === "z-a") {
-        return b.description.localeCompare(a.description);
-      }
-    });
-  
-    if (filterByOrder.length) {
-      hideElement(["#section--operations-no-results"]);
-    } else {
-      showElement(["#section--operations-no-results"]);
+  const filterOperations = (operations) => {
+    const typeFilter = $("#filter--type-select").value;
+    console.log("Tipo de filtro:", typeFilter);
+    const categoryFilter = $("#category--filter-select").value;
+    const fromDateFilter = $("#date--select").value;
+    const orderFilter = $("#order--select").value;
+
+    let filteredOperations = operations;
+
+    // Operaciones antes del filtro de tipo
+    console.log("Operaciones antes del filtro de tipo:", filteredOperations);
+
+    // Aplicar filtro por tipo
+    if (typeFilter !== "Todos") {
+      filteredOperations = filteredOperations.filter(operation => {
+        return operation.type.toLowerCase() === typeFilter.toLowerCase();
+      });
     }
+    console.log(`se ejecuto el filtro tipo:`, typeFilter, filteredOperations)
+
+    // Aplicar filtro por categoría
+    if (categoryFilter !== "Todas") {
+        filteredOperations = filteredOperations.filter(operation => {
+            const category = allCategories.find(cat => cat.id === operation.category);
+            return category && category.categoryName === categoryFilter;
+        });
+    }
+    console.log(`Filtro de categoría:`, categoryFilter, filteredOperations);
+
+    // Aplicar filtro por fecha
+    if (fromDateFilter) {
+        filteredOperations = filteredOperations.filter(operation => new Date(operation.date) >= new Date(fromDateFilter));
+    }
+    console.log(`Filtro de fecha:`, fromDateFilter, filteredOperations);
+
+    // Aplicar ordenamiento
+    switch (orderFilter) {
+        case "MAS_RECIENTES":
+            filteredOperations.sort((a, b) => new Date(b.date) - new Date(a.date));
+            break;
+        case "MENOS_RECIENTES":
+            filteredOperations.sort((a, b) => new Date(a.date) - new Date(b.date));
+            break;
+        case "MAYOR_MONTO":
+            filteredOperations.sort((a, b) => b.amount - a.amount);
+            break;
+        case "MENOR_MONTO":
+            filteredOperations.sort((a, b) => a.amount - b.amount);
+            break;
+        case "A/Z":
+            filteredOperations.sort((a, b) => a.description.localeCompare(b.description));
+            break;
+        case "Z/A":
+            filteredOperations.sort((a, b) => b.description.localeCompare(a.description));
+            break;
+        default:
+            break;
+    }
+    console.log(`Filtro de orden:`, orderFilter, filteredOperations);
+
+    // Renderizar las operaciones filtradas
+    renderOperations(filteredOperations);
+
+    // Actualizar el balance con las operaciones filtradas
+    updateBalance(filteredOperations);
+};
+
   
-    updateBalance(filterByOrder);
-    renderOperations(filterByOrder);
-  };
     
 //Renderizar las categorias en la tabla
 const renderCategoriesTable = (categories) =>{
@@ -617,7 +621,7 @@ const initializeApp = () =>{
     setData("operations", allOperations)
     setData("categories", allCategories)
     setFilterDate()
-    filterOperations(allOperations)
+    filterOperations(allOperations);
     renderCategoriesTable(allCategories)
     renderCategoriesFormOptions(allCategories)
     updateBalance(allOperations);
@@ -657,7 +661,11 @@ const initializeApp = () =>{
     hideElement(["#btn--show-filters"])
   })
 
-  $("#section--filters").addEventListener("change", () => filterOperations(allOperations));
+  //Filtros
+  $("#section--filters").addEventListener("change", () =>{
+    const currentOperations = getData("operations")
+    filterOperations(currentOperations)
+  })
 
   //Mostrar seccion categorias
   $("#btn--go--categories").addEventListener("click", () =>{
