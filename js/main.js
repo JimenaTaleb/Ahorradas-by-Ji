@@ -16,6 +16,22 @@ const hideElement = (selectors) => {
       $(selector).classList.add("hidden")
     }
   }
+
+//Obtener la fecha actual
+  const getCurrentDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }; 
+
+  //Setear la fecha actual 
+  const setFilterDate = () => {
+    const currentDate = getCurrentDate();
+    $("#date--select").value = currentDate;
+    $("#input--date").value = currentDate;
+  }; 
   
 //Función para limpiar el contenedor
   const cleanContainer = (selector) => $(selector).innerHTML = ""
@@ -532,6 +548,7 @@ const renderByMonth = () => {
 const initializeApp = () =>{
     setData("operations", allOperations)
     setData("categories", allCategories)
+    setFilterDate()
     renderOperations(allOperations)
     renderCategoriesTable(allCategories)
     renderCategoriesFormOptions(allCategories)
