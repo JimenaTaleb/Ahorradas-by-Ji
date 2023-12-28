@@ -85,6 +85,8 @@ const allCategories = getData("categories") || defaultCategories
 
 //Renderizar las operaciones en la tabla 
 const renderOperations = (operations) => {
+  const tableBody = $("#operations--table-body");
+  tableBody.innerHTML = "";
   if (operations.length){
     hideElement(["#section--operations-no-results"])
     for (const operation of operations) {
@@ -93,7 +95,7 @@ const renderOperations = (operations) => {
       const amountClass = operation.type === "ganancia" ? 'text-green-500' : 'text-red-500';
       const amountSign = operation.type === "ganancia" ? '+$' : '-$';
 
-      $("#operations--table-body").innerHTML += `
+      tableBody.innerHTML += `
       <tr class="flex flex-wrap justify-between lg:flex-nowrap lg:items-center">
          <td class="w-1/2 text-base mt-4">${operation.description}</td>
          <td class="w-1/2 text-xs mt-4 text-right lg:text-center"><span class="my-1 rounded bg-green-100 mt-4">${categorySelected.categoryName}</span></td>
@@ -110,6 +112,7 @@ const renderOperations = (operations) => {
       showElement(["#section--operations-no-results"])
       hideElement(["#section--operations--results"])
     }
+    updateBalance()
   }
 
   //Filtros
@@ -173,11 +176,7 @@ const renderOperations = (operations) => {
     }
     console.log(`Filtro de orden:`, orderFilter, filteredOperations);
 
-    // Renderizar las operaciones filtradas
-    renderOperations(filteredOperations);
 
-    // Actualizar el balance con las operaciones filtradas
-    updateBalance(filteredOperations);
 };
 
   
@@ -665,6 +664,8 @@ const initializeApp = () =>{
   $("#section--filters").addEventListener("change", () =>{
     const currentOperations = getData("operations")
     filterOperations(currentOperations)
+    renderOperations(allOperations)
+    updateBalance()
   })
 
   //Mostrar seccion categorias
