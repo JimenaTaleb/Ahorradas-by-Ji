@@ -447,6 +447,47 @@ const higherExpenseMonth = () => {
   $("#higher--expenses-month-amount").innerText = `-$${highestExpenseAmount}`;
 };
 
+//Totales por categorías
+const renderByCategories = () => {
+  const allOperations = getData("operations") || [];
+  const allCategories = getData("categories") || [];
+  const totalsByCategory = {};
+
+  // Calcular ganancias, gastos y balance por categoría
+  for (const operation of allOperations) {
+    const { category, amount, type } = operation;
+
+    if (type === "ganancia" || type === "gasto") {
+      if (totalsByCategory[category]) {
+        totalsByCategory[category][type] += amount;
+      } else {
+        totalsByCategory[category] = {
+          ganancia: type === "ganancia" ? amount : 0,
+          gasto: type === "gasto" ? amount : 0,
+        };
+      }
+    }
+  }
+
+  cleanContainer("#table--totals-categories")
+
+
+  for (const categoryID in totalsByCategory) {
+    const categoryName = allCategories.find(category => category.id === categoryID)?.categoryName;
+    const { ganancia, gasto } = totalsByCategory[categoryID];
+    const balance = ganancia - gasto;
+
+    $("#table--totals-categories").innerHTML += `
+      <tr class="flex justify-items-end">
+        <td class="w-1/4 mr-1 text-left">${categoryName || "N/A"}</td>
+        <td class="w-1/4 mr-1 text-green-500 text-center">+$${ganancia}</td>
+        <td class="w-1/4 mr-1 text-red-500 text-center">-$${gasto}</td>
+        <td class="w-1/4 mr-1 text-center">${balance >= 0 ? `+$${balance}` : `$${balance}`}</td>
+      </tr>
+    `;
+  }
+};
+
 
 //Funcion inicializar la app
 const initializeApp = () =>{
@@ -461,6 +502,7 @@ const initializeApp = () =>{
     highestBalanceCategory(allOperations)
     higherEarningsMonth(allOperations)
     higherExpenseMonth(allOperations)
+    renderByCategories(allOperations)
 
 
   // EVENTOS
