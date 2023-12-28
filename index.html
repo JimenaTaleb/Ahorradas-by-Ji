@@ -247,35 +247,44 @@
                 <h3 class="text-2xl font-bold mb-4 p-3">Reportes</h3>
                 <div class="text-xs">
                     <h4 class="text-xl font-semibold pb-8">Resumen</h4>
-                    <div class="flex mb-2 items-center h-full">
-                        <div class="w-1/3 p-1 mr-3 font-bold">Categoria con mayor ganancia</div>
-                        <div class="w-1/4 p-1 text-center sm:text-sm rounded bg-green-100" id="higher--earnings-category"></div>
-                        <div class="w-1/4 p-1 text-right text-green-500 font-bold" id="higher--earnings-amount"></div>
-                    </div>
-                    <div class="flex mb-2 items-center h-full">
-                        <div class="w-1/3 p-1 mr-3 font-bold">Categoria con mayor gasto</div>
-                        <div class="w-1/4 py-1 text-center sm:text-sm rounded bg-green-100" id="higher--expenses-category"></div>
-                        <div class="w-1/4 py-1 text-right text-red-500 font-bold" id="higher--expenses-amount"></div>
-                    </div>
-                    <div class="flex mb-2 items-center h-full">
-                        <div class="w-1/3 p-1 mr-3 font-bold">Categoria con mayor balance</div>
-                        <div class="w-1/4 py-1 text-center sm:text-sm rounded bg-green-100" id="higher--balance-category"></div>
-                        <div class="w-1/4 py-1 text-right font-bold" id="higher--balance-amount"></div>
-                    </div>
-                    <div class="flex mb-2 items-center h-full">
-                        <div class="w-1/3 p-1 mr-3 font-bold">Mes con mayor ganancia</div>
-                        <div class="w-1/4 p-1 text-center sm:text-sm" id="higher--earnings-month"></div>
-                        <div class="w-1/4 p-1 text-right text-green-500 font-bold" id="higher--earnings-month-amount"></div>
-                    </div>
-                    <div class="flex mb-2 items-center h-full">
-                        <div class="w-1/3 p-1 mr-3 font-bold">Mes con mayor gasto</div>
-                        <div class="w-1/4 p-1 text-center sm:text-sm" id="higher--expenses-month"></div>
-                        <div class="w-1/4 p-1 text-right text-red-500 font-bold" id="higher--expenses-month-amount"></div>
+                    <div class="sm:text-base">
+                        <div class="flex mb-2 items-center h-full">
+                            <div class="w-1/3 p-1 mr-3 font-bold">Categoria con mayor ganancia</div>
+                            <div class="w-1/4 p-1 text-center sm:text-sm rounded bg-green-100"
+                                id="higher--earnings-category"></div>
+                            <div class="w-1/4 p-1 text-right text-green-500 font-bold" id="higher--earnings-amount">
+                            </div>
+                        </div>
+                        <div class="flex mb-2 items-center h-full">
+                            <div class="w-1/3 p-1 mr-3 font-bold">Categoria con mayor gasto</div>
+                            <div class="w-1/4 py-1 text-center sm:text-sm rounded bg-green-100"
+                                id="higher--expenses-category"></div>
+                            <div class="w-1/4 py-1 text-right text-red-500 font-bold" id="higher--expenses-amount">
+                            </div>
+                        </div>
+                        <div class="flex mb-2 items-center h-full">
+                            <div class="w-1/3 p-1 mr-3 font-bold">Categoria con mayor balance</div>
+                            <div class="w-1/4 py-1 text-center sm:text-sm rounded bg-green-100"
+                                id="higher--balance-category"></div>
+                            <div class="w-1/4 py-1 text-right font-bold" id="higher--balance-amount"></div>
+                        </div>
+                        <div class="flex mb-2 items-center h-full">
+                            <div class="w-1/3 p-1 mr-3 font-bold">Mes con mayor ganancia</div>
+                            <div class="w-1/4 p-1 text-center sm:text-sm" id="higher--earnings-month"></div>
+                            <div class="w-1/4 p-1 text-right text-green-500 font-bold"
+                                id="higher--earnings-month-amount"></div>
+                        </div>
+                        <div class="flex mb-2 items-center h-full">
+                            <div class="w-1/3 p-1 mr-3 font-bold">Mes con mayor gasto</div>
+                            <div class="w-1/4 p-1 text-center sm:text-sm" id="higher--expenses-month"></div>
+                            <div class="w-1/4 p-1 text-right text-red-500 font-bold" id="higher--expenses-month-amount">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div>
                     <h4 class="text-xl font-semibold pb-8 pt-8">Totales por categorías</h4>
-                    <table class="w-full text-xs sm:text-sm">
+                    <table class="w-full text-xs sm:text-base">
                         <thead>
                             <tr class="flex justify-items-end">
                                 <th class="w-1/4 mr-1 text-left">Categoría</th>
@@ -287,12 +296,12 @@
                         <tbody id="table--totals-categories">
 
                         </tbody>
-                       
+
                     </table>
                 </div>
                 <div>
                     <h4 class="text-xl font-semibold pb-8 pt-8">Totales por mes</h4>
-                    <table class="w-full text-xs sm:text-sm">
+                    <table class="w-full text-xs sm:text-base">
                         <thead>
                             <tr class="flex justify-items-end">
                                 <th class="w-1/4 mr-1 text-left">Mes</th>
@@ -304,11 +313,11 @@
                         <tbody id="table--totals-month">
 
                         </tbody>
-                       
+
                     </table>
-                   
+
                 </div>
-               
+
         </section>
         <!-- ventana modal -->
         <div id="modal--delete"
