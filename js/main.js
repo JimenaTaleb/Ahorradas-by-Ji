@@ -82,6 +82,7 @@ const allCategories = getData("categories") || defaultCategories
 
 // Funciones principales:
 
+
 //Renderizar las operaciones en la tabla 
 const renderOperations = (operations) => {
   if (operations.length){
@@ -110,10 +111,74 @@ const renderOperations = (operations) => {
       hideElement(["#section--operations--results"])
     }
   }
+
+  //Filtros
+const filterOperations = () =>{
+  //Valores seleccionados de los filtros:
+  const selectedType = $("#type--select").value
+  const selectedCategory = $("#category--filter-select").value
+  const selectedDate = $("#date--select").value
+  const selectedOrder = $("#order--select").value
+
+  //Primer filtro: tipo
+  const filterByType = getData("operations").filter((operation) => {
+    if (selectedType === "todos") {
+        return operation
+    }
+    return selectedType === operation.type
+})
+
+//Al filtro de tipo, lo filtro de nuevo por categoria:
+const filterByCategory = filterByType.filter((operation) => {
+  if (selectedCategory === "todas") {
+      return operation
+  } else {
+      return selectedCategory === operation.category
+  }
+})
+
+//Al filtro de tipo y categoria, vuelvo a filtrar por fecha
+const filterByDate = filterByCategory.filter((operation) => {
+  const selectedDate = new Date(selectedDate);
+  return new Date(operation.date) >= selectedDate;
+});
+
+//Ultimo filtro: orden
+const filterBySort = filterByDate.sort((a, b) => {
+  if (selectedOrder === "mas-reciente"){
+      return new Date(b.date).getDate() - new Date(a.date).getDate()
+  } 
+  if (selectedOrder === "menos-reciente") {
+      return new Date(a.date).getDate() - new Date(b.date).getDate()
+  }
+  if (selectedOrder === "mayor-monto") {
+      return b.amount - a.amount
+  }
+  if (selectedOrder === "menor-monto") {
+      return a.amount - b.amount
+  }
+  if (selectedOrder === "a-z") {
+      return a.description.localeCompare(b.description)
+  }
+  if (selectedOrder === "z-a") {
+      return b.description.localeCompare(a.description)
+  }
+})
+
+if (filterBySort.length) {
+  hideElement(["#section--operations-no-results"])
+} else{
+  showElement(["#section--operations-no-results"])
+}
+
+updateBalance(filterBySort)
+renderOperations(filterBySort)
+}
     
 //Renderizar las categorias en la tabla
 const renderCategoriesTable = (categories) =>{
   for (const category of categories){
+    cleanContainer("#categories--table-body");
     $("#categories--table-body").innerHTML += `
     <tr class="flex flex-wrap justify-between lg:flex-nowrap lg:items-center">
          <td class="w-1/2 text-base mt-4">${category.categoryName}</td>
@@ -549,7 +614,7 @@ const initializeApp = () =>{
     setData("operations", allOperations)
     setData("categories", allCategories)
     setFilterDate()
-    renderOperations(allOperations)
+    filterOperations(allOperations)
     renderCategoriesTable(allCategories)
     renderCategoriesFormOptions(allCategories)
     updateBalance(allOperations);
@@ -588,6 +653,8 @@ const initializeApp = () =>{
     showElement(["#all--filters", "#btn--hide-filters"])
     hideElement(["#btn--show-filters"])
   })
+
+  $("#section--filters").addEventListener("change", () => filterOperations(allOperations));
 
   //Mostrar seccion categorias
   $("#btn--go--categories").addEventListener("click", () =>{
