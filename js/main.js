@@ -453,7 +453,6 @@ const renderByCategories = () => {
   const allCategories = getData("categories") || [];
   const totalsByCategory = {};
 
-  // Calcular ganancias, gastos y balance por categoría
   for (const operation of allOperations) {
     const { category, amount, type } = operation;
 
@@ -488,6 +487,46 @@ const renderByCategories = () => {
   }
 };
 
+//Totales por mes
+const renderByMonth = () => {
+  const allOperations = getData("operations") || [];
+  const totalsByMonth = {};
+
+  for (const operation of allOperations) {
+    const { amount, type, date } = operation;
+
+    if (type === "ganancia" || type === "gasto") {
+      const operationDate = new Date(date);
+      const monthYear = `${operationDate.getMonth() + 1}-${operationDate.getFullYear()}`;
+
+      if (totalsByMonth[monthYear]) {
+        totalsByMonth[monthYear][type] += amount;
+      } else {
+        totalsByMonth[monthYear] = {
+          ganancia: type === "ganancia" ? amount : 0,
+          gasto: type === "gasto" ? amount : 0,
+        };
+      }
+    }
+  }
+
+  cleanContainer("#table--totals-month");
+
+  for (const monthYear in totalsByMonth) {
+    const { ganancia, gasto } = totalsByMonth[monthYear];
+    const balance = ganancia - gasto;
+
+    $("#table--totals-month").innerHTML += `
+      <tr class="flex justify-items-end">
+        <td class="w-1/4 mr-1 text-left">${monthYear}</td>
+        <td class="w-1/4 mr-1 text-green-500 text-center">+$${ganancia}</td>
+        <td class="w-1/4 mr-1 text-red-500 text-center">-$${gasto}</td>
+        <td class="w-1/4 mr-1 text-center">${balance >= 0 ? `+$${balance}` : `-$${balance}`}</td>
+      </tr>
+    `;
+  }
+};
+
 
 //Funcion inicializar la app
 const initializeApp = () =>{
@@ -503,6 +542,7 @@ const initializeApp = () =>{
     higherEarningsMonth(allOperations)
     higherExpenseMonth(allOperations)
     renderByCategories(allOperations)
+    renderByMonth(allOperations)
 
 
   // EVENTOS

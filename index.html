@@ -275,10 +275,10 @@
                 </div>
                 <div>
                     <h4 class="text-xl font-semibold pb-8 pt-8">Totales por categorías</h4>
-                    <table class="text-xs">
+                    <table class="w-full text-xs sm:text-sm">
                         <thead>
                             <tr class="flex justify-items-end">
-                                <th class="w-1/4 mr-1">Categoría</th>
+                                <th class="w-1/4 mr-1 text-left">Categoría</th>
                                 <th class="w-1/4 mr-1">Ganancias</th>
                                 <th class="w-1/4 mr-1">Gastos</th>
                                 <th class="w-1/4">Balance</th>
@@ -292,10 +292,21 @@
                 </div>
                 <div>
                     <h4 class="text-xl font-semibold pb-8 pt-8">Totales por mes</h4>
-                    <table>
-                       
+                    <table class="w-full text-xs sm:text-sm">
+                        <thead>
+                            <tr class="flex justify-items-end">
+                                <th class="w-1/4 mr-1 text-left">Mes</th>
+                                <th class="w-1/4 mr-1">Ganancias</th>
+                                <th class="w-1/4 mr-1">Gastos</th>
+                                <th class="w-1/4">Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table--totals-month">
+
+                        </tbody>
                        
                     </table>
+                   
                 </div>
                
         </section>
