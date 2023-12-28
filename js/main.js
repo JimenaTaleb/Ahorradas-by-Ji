@@ -147,7 +147,7 @@ const renderOperations = (operations) => {
     });
   
     // Último filtro: orden
-    const filterBySort = filterByDate.sort((a, b) => {
+    const filterByOrder = filterByDate.sort((a, b) => {
       if (selectedOrder === "mas-reciente") {
         return new Date(b.date) - new Date(a.date);
       }
@@ -168,14 +168,14 @@ const renderOperations = (operations) => {
       }
     });
   
-    if (filterBySort.length) {
+    if (filterByOrder.length) {
       hideElement(["#section--operations-no-results"]);
     } else {
       showElement(["#section--operations-no-results"]);
     }
   
-    updateBalance(filterBySort);
-    renderOperations(filterBySort);
+    updateBalance(filterByOrder);
+    renderOperations(filterByOrder);
   };
     
 //Renderizar las categorias en la tabla
