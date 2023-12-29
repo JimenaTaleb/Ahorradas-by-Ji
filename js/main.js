@@ -85,7 +85,6 @@ const allCategories = getData("categories") || defaultCategories
 
 //Renderizar las operaciones en la tabla 
 const renderOperations = (operations) => {
-  console.log("Operaciones a renderizar:", operations);
   $("#operations--table-body").innerHTML = "";
   if (operations.length){
     hideElement(["#section--operations-no-results"])
