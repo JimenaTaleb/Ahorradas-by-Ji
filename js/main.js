@@ -185,8 +185,9 @@ const renderOperations = (operations) => {
     
 //Renderizar las categorias en la tabla
 const renderCategoriesTable = (categories) =>{
-  for (const category of categories){
-    cleanContainer("#categories--table-body");
+  const allCategories = getData("categories") || defaultCategories;
+  for (const category of allCategories){
+    
     $("#categories--table-body").innerHTML += `
     <tr class="flex flex-wrap justify-between lg:flex-nowrap lg:items-center">
          <td class="w-1/2 text-base mt-4">${category.categoryName}</td>
@@ -198,6 +199,22 @@ const renderCategoriesTable = (categories) =>{
     `
   }
 }
+
+//Agregar categorias
+  const addCategory = () => {
+    const currentData = getData("categories");
+    currentData.push(saveCategoryInfo())
+    setData("categories", currentData)
+  };
+
+  //Mostrar el formulario para editar categorias
+  const showFormCategoryEdit = (categoryId) => {
+    showElement(["#form--categories", "#title--operation-edit", "#btn--edit-category-form"]);
+    hideElement(["#add--category-title", "#categories--table", "#btn--add-category"]);
+    $("#btn--edit-category-form").setAttribute("data-id", categoryId);
+    const categorySelected = getData("categories").find(category => category.id === categoryId);
+    $("#input--category").value = categorySelected.categoryName;
+  };
 
 //Renderizar las categorias en el form
 const renderCategoriesFormOptions = (categories) =>{
@@ -287,21 +304,7 @@ const showModalDeleteOperation = (operationId, operationDescription) =>{
   };
 };
 
-  //Agregar categorias
-  const addCategory = () => {
-    const currentData = getData("categories");
-    currentData.push(saveCategoryInfo())
-    setData("categories", currentData)
-  };
-
-  //Mostrar el formulario para editar categorias
-  const showFormCategoryEdit = (categoryId) => {
-    showElement(["#form--categories", "#title--operation-edit", "#btn--edit-category-form"]);
-    hideElement(["#add--category-title", "#categories--table", "#btn--add-category"]);
-    $("#btn--edit-category-form").setAttribute("data-id", categoryId);
-    const categorySelected = getData("categories").find(category => category.id === categoryId);
-    $("#input--category").value = categorySelected.categoryName;
-  };
+  
 
     //Editar categorías
     const editCategory = () => {
@@ -331,10 +334,17 @@ const showModalDeleteCategory = (categoryId, categoryName) =>{
   })
 } 
 
-//Eliminar categorías
 const deleteCategory = (categoryId) => {
+  const allCategories = getData("categories") || defaultCategories;
+
+  const currentCategories = allCategories.filter(category => category.id !== categoryId);
+
+  setData("categories", currentCategories);
+
+
   const currentData = getData("operations").filter(operation => operation.category !== categoryId);
   setData("operations", currentData);
+
   window.location.reload();
 };
 
