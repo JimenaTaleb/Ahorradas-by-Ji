@@ -176,6 +176,7 @@ const renderOperations = (operations) => {
     } else {
       showElement(["#section--operations-no-results"]);
       hideElement(["#section--operations--results"]);
+      updateBalance(filteredOperations)
     }
   }
 
@@ -351,11 +352,28 @@ const updateBalance = (operations) => {
     }
   }
 
+  const totalBalance = totalEarnings - totalExpenses;
+
+
+  let balanceColor = "black";
+  if (totalBalance > 0) {
+    balanceColor = "bg-green-500";
+  } else if (totalBalance < 0) {
+    balanceColor = "bg-red-500";
+  }
+
   $("#balance--earning").innerText = `+$${totalEarnings}`;
   $("#balance--expense").innerText = `-$${totalExpenses}`;
+  $("#balance--total").style.color = balanceColor;
+  $("#balance--total").innerText = totalBalance >= 0 ? `+$${totalBalance}` : `-$${Math.abs(totalBalance)}`;
 
-  const totalBalance = totalEarnings - totalExpenses;
-  $("#balance--total").innerText = totalBalance >= 0 ? `+$${totalBalance}` : `-$${totalBalance}`;
+
+  if (allOperations.length === 0) {
+    $("#balance--earning").innerText = `+$0`;
+    $("#balance--expense").innerText = `-$0`;
+    $("#balance--total").style.color = "black";
+    $("#balance--total").innerText = `$0`;
+  }
 };
 
 
