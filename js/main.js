@@ -411,7 +411,7 @@ for (const categoryID in earningsByCategory) {
   }
 }
 
-$("#higher--earnings-category").innerText = highestEarningCategory
+$("#higher--earnings-category").innerText = highestEarningCategory || "N/A";
 $("#higher--earnings-amount").innerText = `+$${highestEarningAmount}`
 
 };
