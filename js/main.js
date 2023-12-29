@@ -637,15 +637,19 @@ const renderByMonth = () => {
 };
 
 const showReports = (operations) =>{
-  const allOperations = getData("operations") || [];
-  if(allOperations.length >= 2){
-    showElement(["#reports--results"])
-    hideElement(["#reports--no-results"])
-  } else{
-    showElement(["#reports--no-results"])
-    hideElement(["#reports--results"])
+  const allOperations = operations || getData("operations") || [];
+
+  const earnings = allOperations.filter(operation => operation.type === "ganancia");
+  const expenses = allOperations.filter(operation => operation.type === "gasto");
+
+  if (earnings.length >= 1 && expenses.length >= 1) {
+    showElement(["#reports--results"]);
+    hideElement(["#reports--no-results"]);
+  } else {
+    showElement(["#reports--no-results"]);
+    hideElement(["#reports--results"]);
   }
-}
+};
 
 
 //Funcion inicializar la app
