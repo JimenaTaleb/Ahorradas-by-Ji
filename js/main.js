@@ -168,7 +168,6 @@ const renderOperations = (operations) => {
       default:
         break;
     }
-    console.log(filteredOperations);
   
     if (filteredOperations.length) {
       renderOperations(filteredOperations);
@@ -198,6 +197,7 @@ const renderCategoriesTable = (categories) =>{
       </tr>
     `
   }
+  
 }
 
 //Agregar categorias
@@ -364,24 +364,23 @@ const updateBalance = (operations) => {
 
   const totalBalance = totalEarnings - totalExpenses;
 
-
-  let balanceColor = "black";
-  if (totalBalance > 0) {
-    balanceColor = "bg-green-500";
-  } else if (totalBalance < 0) {
-    balanceColor = "bg-red-500";
+  if(totalBalance === 0){
+    $("#balance--total").style.color = "black"
+  } else if(totalBalance > 0){
+    $("#balance--total").style.color = "bg-green-500"
+  } else if(totalBalance < 0){
+    $("#balance--total").style.color = "bg-red-500"
   }
+
 
   $("#balance--earning").innerText = `+$${totalEarnings}`;
   $("#balance--expense").innerText = `-$${totalExpenses}`;
-  $("#balance--total").style.color = balanceColor;
   $("#balance--total").innerText = totalBalance >= 0 ? `+$${totalBalance}` : `-$${Math.abs(totalBalance)}`;
 
 
   if (allOperations.length === 0) {
     $("#balance--earning").innerText = `+$0`;
     $("#balance--expense").innerText = `-$0`;
-    $("#balance--total").style.color = "black";
     $("#balance--total").innerText = `$0`;
   }
 };
@@ -643,6 +642,17 @@ const renderByMonth = () => {
   }
 };
 
+const showReports = (operations) =>{
+  const allOperations = getData("operations") || [];
+  if(allOperations.length >= 2){
+    showElement(["#reports--results"])
+    hideElement(["#reports--no-results"])
+  } else{
+    showElement(["#reports--no-results"])
+    hideElement(["#reports--results"])
+  }
+}
+
 
 //Funcion inicializar la app
 const initializeApp = () =>{
@@ -653,6 +663,7 @@ const initializeApp = () =>{
     renderCategoriesTable(allCategories)
     renderCategoriesFormOptions(allCategories)
     updateBalance(allOperations);
+    showReports(allOperations)
     higherEarningsCategory(allOperations)
     higherExpenseCategory(allOperations)
     highestBalanceCategory(allOperations)
@@ -752,7 +763,7 @@ const initializeApp = () =>{
 
   //Abrir ventana reportes
   $("#btn--go--reports").addEventListener("click", () =>{
-    hideElement(["#section--main-balance", "#section--balance", "#section--filters", "#form--operation", "#section--categories", "#section--operations--results"])
+    hideElement(["#section--main-balance", "#section--balance", "#section--filters", "#form--operation", "#section--categories", "#section--operations--results", "#section--operations-no-results"])
     showElement(["#section--reports"])
   })
 
