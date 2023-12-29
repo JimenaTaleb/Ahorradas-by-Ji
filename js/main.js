@@ -22,7 +22,7 @@ const getCurrentDate = () => {
   const today = new Date();
   const year = today.getFullYear();
   const month = String(today.getMonth() + 1).padStart(2, "0");
-  const firstDay = "01"; // Día fijo, el primero del mes
+  const firstDay = "01";
   return `${year}-${month}-${firstDay}`;
 };
 
@@ -114,7 +114,9 @@ const renderOperations = (operations) => {
              }')"><i class="fa-regular fa-pen-to-square text-xs mt-4 bg-green-500 text-white py-1 px-2 rounded-md ml-2 hover:bg-green-600"></i></button>
              <button onclick="showModalDeleteOperation('${operation.id}', '${
         operation.description
-      }')"><i class="fa-solid fa-trash text-xs mt-4 bg-red-500 text-white py-1 px-2 rounded-md ml-2 hover:bg-red-600"></i></button>
+      }')">
+             <i class="fa-solid fa-trash text-xs mt-4 bg-red-500 text-white py-1 px-2 rounded-md ml-2 hover:bg-red-600"></i>
+             </button>
          </td>
       </tr>
       `;
@@ -128,27 +130,27 @@ const renderOperations = (operations) => {
 
 //Validar operaciones
 const validateOperation = () => {
-    const description = $("#input--description").value.trim();
-    const amount = $("#input--amount").value.trim();
+  const description = $("#input--description").value.trim();
+  const amount = $("#input--amount").value.trim();
 
-    const amountRegex = /^-?\d+([.,]\d{1,2})?$/
-  
-    if (description === "") {
-      showElement(["#ivalid--description"]);
-    } else {
-      hideElement(["#ivalid--description"]);
-    }
-  
-    if (amount === "" || !amountRegex.test(amount) || parseFloat(amount) === 0) {
-      showElement(["#invalid--amount"]);
-    } else {
-      hideElement(["#invalid--amount"]);
-    }
-  
-    const passesValidations =
-      description !== "" && amountRegex.test(amount) && parseFloat(amount) !== 0;
-  
-    return passesValidations;
+  const amountRegex = /^-?\d+([.,]\d{1,2})?$/;
+
+  if (description === "") {
+    showElement(["#ivalid--description"]);
+  } else {
+    hideElement(["#ivalid--description"]);
+  }
+
+  if (amount === "" || !amountRegex.test(amount) || parseFloat(amount) === 0) {
+    showElement(["#invalid--amount"]);
+  } else {
+    hideElement(["#invalid--amount"]);
+  }
+
+  const passesValidations =
+    description !== "" && amountRegex.test(amount) && parseFloat(amount) !== 0;
+
+  return passesValidations;
 };
 
 //Filtros
@@ -436,7 +438,9 @@ const updateBalance = (operations) => {
   $("#balance--earning").innerText = `+$${totalEarnings.toFixed(2)}`;
   $("#balance--expense").innerText = `-$${totalExpenses.toFixed(2)}`;
   $("#balance--total").innerText =
-    totalBalance >= 0 ? `+$${totalBalance.toFixed(2)}` : `-$${Math.abs(totalBalance).toFixed(2)}`;
+    totalBalance >= 0
+      ? `+$${totalBalance.toFixed(2)}`
+      : `-$${Math.abs(totalBalance).toFixed(2)}`;
 
   if (allOperations.length === 0) {
     $("#balance--earning").innerText = `+$0.00`;
@@ -462,7 +466,7 @@ const higherEarningsCategory = (operations) => {
     }
   }
 
-  let highestEarningCategory = null;
+  let highestEarningCategory = "";
   let highestEarningAmount = 0;
 
   for (const categoryID in earningsByCategory) {
@@ -496,7 +500,7 @@ const higherExpenseCategory = (operations) => {
     }
   }
 
-  let highestExpenseCategory = null;
+  let highestExpenseCategory = "";
   let highestExpenseAmount = 0;
 
   for (const categoryID in expensesByCategory) {
@@ -532,7 +536,7 @@ const highestBalanceCategory = () => {
     }
   }
 
-  let highestBalanceCategory = null;
+  let highestBalanceCategory = "";
   let highestBalanceAmount = 0;
 
   for (const categoryID in balancesByCategory) {
@@ -572,7 +576,7 @@ const higherEarningsMonth = () => {
     }
   }
 
-  let highestEarningMonth = null;
+  let highestEarningMonth = "";
   let highestEarningAmount = 0;
 
   for (const monthYear in earningsByMonth) {
@@ -610,7 +614,7 @@ const higherExpenseMonth = () => {
     }
   }
 
-  let highestExpenseMonth = null;
+  let highestExpenseMonth = "";
   let highestExpenseAmount = 0;
 
   for (const monthYear in expensesByMonth) {
