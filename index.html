@@ -57,7 +57,7 @@
                     <div class="w-4/5 border mb-0 rounded-lg mx-auto shadow-md p-2 bg-stone-50 mb-8">
                         <h2 class="text-3xl font-bold mb-4 p-3">Balance</h2>
                         <div class="flex justify-between">
-                            <div class="p-3 text-xl">Ganancias</div>
+                            <div class="p-2 text-xl">Ganancias</div>
                             <div class="text-green-500 p-3" id="balance--earning">+$0</div>
                         </div>
                         <div class="flex justify-between">
@@ -169,13 +169,14 @@
             <form action="#" class="" id="form">
                 <div class="mb-4 h-30 flex flex-col justify-between">
                     <label for="input--description" class="text-base font-bold pb-4">Descripción</label>
-                    <input type="text" id="input--description" class="w-full h-10 border rounded-md p-2"
-                        placeholder="Descripción" required />
+                    <input type="text" id="input--description" class="w-full h-10 border rounded-md p-2" placeholder="Descripción" required />
+                    <p class="hidden text-xs text-red-500" id="ivalid--description">Debe completar este campo<i class="fa-solid fa-triangle-exclamation"></i></p>
                 </div>
                 <div class="mb-4 flex flex-col justify-between">
                     <label for="input--amount" class="text-base font-bold mb-2">Monto</label>
-                    <input type="number" id="input--amount" class="w-full h-10 border rounded-md p-2" placeholder="0"
-                        required />
+                    <input type="number" id="input--amount" class="w-full h-10 border rounded-md p-2" placeholder="0" required />
+                    <p class="text-xs text-red-500">Ingresar números decimales con coma<i class="fa-solid fa-triangle-exclamation"></i></p>
+                    <p class="hidden text-xs text-red-500" id="invalid--amount">El monto ingresado es inválido<i class="fa-solid fa-triangle-exclamation"></i></p>
                 </div>
                 <div class="mb-4 flex flex-col justify-between">
                     <label for="input--type" class="text-base font-bold mb-2">Tipo</label>
