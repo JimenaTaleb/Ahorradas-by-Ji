@@ -480,9 +480,17 @@ const higherEarningsCategory = (operations) => {
     }
   }
 
-  $("#higher--earnings-category").innerText = highestEarningCategory || "N/A";
-  $("#higher--earnings-amount").innerText = `+$${highestEarningAmount}`;
+  return {highestEarningCategory, highestEarningAmount}
+
 };
+
+//Renderizar categoría con mayor ganancia
+const renderHigherEarningsCategory = (getHigherEarningsCategory) =>{
+  const {highestEarningCategory, highestEarningAmount} = getHigherEarningsCategory()
+
+  $("#higher--earnings-category").innerText = highestEarningCategory || "N/A";
+  $("#higher--earnings-amount").innerText = `+$${highestEarningAmount.toFixed(2)}`;
+}
 
 //Categoría con mayor gasto
 const higherExpenseCategory = (operations) => {
@@ -514,9 +522,17 @@ const higherExpenseCategory = (operations) => {
     }
   }
 
-  $("#higher--expenses-category").innerText = highestExpenseCategory;
-  $("#higher--expenses-amount").innerText = `-$${highestExpenseAmount}`;
+  return {highestExpenseCategory, highestExpenseAmount}
+
 };
+
+//Renderizar categoría con mayor gasto
+const renderHigherExpenseCategory = (getHigherExpenseCategory) =>{
+  const {highestExpenseCategory, highestExpenseAmount} = getHigherExpenseCategory()
+
+  $("#higher--expenses-category").innerText = highestExpenseCategory;
+  $("#higher--expenses-amount").innerText = `-$${highestExpenseAmount.toFixed(2)}`;
+}
 
 //Categoría con mayor balance
 const highestBalanceCategory = () => {
@@ -550,11 +566,17 @@ const highestBalanceCategory = () => {
     }
   }
 
-  $("#higher--balance-category").innerText = highestBalanceCategory || "N/A";
-  $("#higher--balance-amount").innerText = `$${highestBalanceAmount.toFixed(
-    2
-  )}`;
+  return {highestBalanceCategory, highestBalanceAmount}
+
 };
+
+//Renderizar categoría con mayor balance
+const renderHighestBalanceCategory = (getHighestBalanceCategory) =>{
+  const {highestBalanceCategory, highestBalanceAmount} = getHighestBalanceCategory()
+
+  $("#higher--balance-category").innerText = highestBalanceCategory || "N/A";
+  $("#higher--balance-amount").innerText = `$${highestBalanceAmount.toFixed(2)}`;
+}
 
 //Mes con mayor ganancia
 const higherEarningsMonth = () => {
@@ -588,11 +610,17 @@ const higherEarningsMonth = () => {
     }
   }
 
-  $("#higher--earnings-month").innerText = highestEarningMonth || "N/A";
-  $(
-    "#higher--earnings-month-amount"
-  ).innerText = `+$${highestEarningAmount.toFixed(2)}`;
+  return {highestEarningMonth, highestEarningAmount}
+
 };
+
+//Renderizar mes con mayor ganancia
+const renderHigherEarningsMonth = (getHigherEarningsMonth) =>{
+  const {highestEarningMonth, highestEarningAmount} = getHigherEarningsMonth()
+
+  $("#higher--earnings-month").innerText = highestEarningMonth || "N/A";
+  $("#higher--earnings-month-amount").innerText = `+$${highestEarningAmount.toFixed(2)}`;
+}
 
 //Mes con mayor gasto
 const higherExpenseMonth = () => {
@@ -626,12 +654,19 @@ const higherExpenseMonth = () => {
     }
   }
 
-  $("#higher--expenses-month").innerText = highestExpenseMonth || "N/A";
-  $("#higher--expenses-month-amount").innerText = `-$${highestExpenseAmount}`;
+  return {highestExpenseAmount, highestExpenseMonth}
 };
 
+//Renderizar mes con mayor gasto
+const renderHigherExpenseMonth = (getHigherExpenseMonth) =>{
+  const {highestExpenseAmount, highestExpenseMonth} = getHigherExpenseMonth()
+
+  $("#higher--expenses-month").innerText = highestExpenseMonth || "N/A";
+  $("#higher--expenses-month-amount").innerText = `-$${highestExpenseAmount.toFixed(2)}`;
+}
+
 //Totales por categorías
-const renderByCategories = () => {
+const totalsByCategory = () => {
   const allOperations = getData("operations") || [];
   const allCategories = getData("categories") || [];
   const totalsByCategory = {};
@@ -651,7 +686,7 @@ const renderByCategories = () => {
     }
   }
 
-  cleanContainer("#table--totals-categories");
+  const renderedData = [];
 
   for (const categoryID in totalsByCategory) {
     const categoryName = allCategories.find(
@@ -660,21 +695,39 @@ const renderByCategories = () => {
     const { ganancia, gasto } = totalsByCategory[categoryID];
     const balance = ganancia - gasto;
 
+    renderedData.push({
+      categoryName: categoryName || "N/A",
+      ganancia,
+      gasto,
+      balance,
+    });
+  }
+
+  return renderedData;
+};
+
+
+const renderByCategories = (getTotalsByCategory) => {
+  const calculateTotalsByCategory = getTotalsByCategory();
+
+  cleanContainer("#table--totals-categories");
+
+  for (const data of calculateTotalsByCategory) {
+    const { categoryName, ganancia, gasto, balance } = data;
+
     $("#table--totals-categories").innerHTML += `
       <tr class="flex justify-items-end">
-        <td class="w-1/4 mr-1 text-left">${categoryName || "N/A"}</td>
+        <td class="w-1/4 mr-1 text-left">${categoryName}</td>
         <td class="w-1/4 mr-1 text-green-500 text-center">+$${ganancia}</td>
         <td class="w-1/4 mr-1 text-red-500 text-center">-$${gasto}</td>
-        <td class="w-1/4 mr-1 text-center">${
-          balance >= 0 ? `+$${balance}` : `$${balance}`
-        }</td>
+        <td class="w-1/4 mr-1 text-center">${balance >= 0 ? `+$${balance}` : `$${balance}`}</td>
       </tr>
     `;
   }
 };
 
 //Totales por mes
-const renderByMonth = () => {
+const totalsByMonth = () => {
   const allOperations = getData("operations") || [];
   const totalsByMonth = {};
 
@@ -698,11 +751,30 @@ const renderByMonth = () => {
     }
   }
 
-  cleanContainer("#table--totals-month");
+  const totals = [];
 
   for (const monthYear in totalsByMonth) {
     const { ganancia, gasto } = totalsByMonth[monthYear];
     const balance = ganancia - gasto;
+
+    totals.push({
+      monthYear,
+      ganancia,
+      gasto,
+      balance,
+    });
+  }
+
+  return totals;
+};
+
+const renderByMonth = (getTotalsByMonth) => {
+  const totalsByMonth = getTotalsByMonth();
+
+  cleanContainer("#table--totals-month");
+
+  for (const data of totalsByMonth) {
+    const { monthYear, ganancia, gasto, balance } = data;
 
     $("#table--totals-month").innerHTML += `
       <tr class="flex justify-items-end">
@@ -716,6 +788,7 @@ const renderByMonth = () => {
     `;
   }
 };
+
 
 const showReports = (operations) => {
   const allOperations = operations || getData("operations") || [];
@@ -746,13 +819,14 @@ const initializeApp = () => {
   renderCategoriesFormOptions(allCategories);
   updateBalance(allOperations);
   showReports(allOperations);
-  higherEarningsCategory(allOperations);
-  higherExpenseCategory(allOperations);
-  highestBalanceCategory(allOperations);
-  higherEarningsMonth(allOperations);
-  higherExpenseMonth(allOperations);
-  renderByCategories(allOperations);
-  renderByMonth(allOperations);
+  renderHigherEarningsCategory(higherEarningsCategory)
+  renderHigherExpenseCategory(higherExpenseCategory)
+  renderHighestBalanceCategory(highestBalanceCategory)
+  renderHigherEarningsMonth(higherEarningsMonth)
+  renderHigherExpenseMonth(higherExpenseMonth)
+  renderByCategories(totalsByCategory);
+  renderByMonth(totalsByMonth)
+
 
   // EVENTOS
   //Abrir menu responsive
