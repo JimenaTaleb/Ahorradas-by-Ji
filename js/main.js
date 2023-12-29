@@ -5,198 +5,183 @@ const $ = (selector) => document.querySelector(selector);
 
 //Mostrar elementos
 const showElement = (selectors) => {
-  for (const selector of selectors) {
-    $(selector).classList.remove("hidden");
+    for (const selector of selectors){
+      $(selector).classList.remove("hidden")
+    }
   }
-};
 
 //Ocultar elementos
 const hideElement = (selectors) => {
-  for (const selector of selectors) {
-    $(selector).classList.add("hidden");
+    for (const selector of selectors){
+      $(selector).classList.add("hidden")
+    }
   }
-};
 
 //Fecha del día en curso
-const getCurrentDate = () => {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, "0");
-  const day = String(today.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-};
+  const getCurrentDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const firstDay = "01"; // Día fijo, el primero del mes
+    return `${year}-${month}-${firstDay}`;
+  }; 
 
-//Setear fecha en curso
-const setFilterDate = () => {
-  const currentDate = getCurrentDate();
-  $("#date--select").value = currentDate;
-  $("#input--date").value = currentDate;
-};
-
+  //Setear fecha en curso
+  const setFilterDate = () => {
+    const currentDate = getCurrentDate();
+    $("#date--select").value = currentDate;
+    $("#input--date").value = currentDate;
+  }; 
+  
 //Limpiar contenedor
-const cleanContainer = (selector) => ($(selector).innerHTML = "");
+  const cleanContainer = (selector) => $(selector).innerHTML = ""
 
 //Generador de id´s
-const randomIdGenerator = () => self.crypto.randomUUID();
+const randomIdGenerator = () => self.crypto.randomUUID()  
 
 //Traer info de localStorage
-const getData = (key) => JSON.parse(localStorage.getItem(key));
+const getData = (key) => JSON.parse(localStorage.getItem(key))
 
 //Setear la info de local storage
-const setData = (key, data) => localStorage.setItem(key, JSON.stringify(data));
+const setData = (key, data) => localStorage.setItem(key, JSON.stringify(data))
 
 //Categorías por defecto
 const defaultCategories = [
   {
     id: randomIdGenerator(),
-    categoryName: "Comidas",
+    categoryName: "Comidas"
   },
   {
     id: randomIdGenerator(),
-    categoryName: "Servicios",
+    categoryName: "Servicios"
   },
   {
     id: randomIdGenerator(),
-    categoryName: "Salidas",
+    categoryName: "Salidas"
   },
   {
     id: randomIdGenerator(),
-    categoryName: "Educación",
+    categoryName: "Educación"
   },
   {
     id: randomIdGenerator(),
-    categoryName: "Transporte",
+    categoryName: "Transporte"
   },
   {
     id: randomIdGenerator(),
-    categoryName: "Trabajo",
-  },
-];
+    categoryName: "Trabajo"
+  }
+]
 
 //Operaciones
-const allOperations = getData("operations") || [];
+const allOperations = getData("operations") || []
 
 //Categorías
-const allCategories = getData("categories") || defaultCategories;
+const allCategories = getData("categories") || defaultCategories
+
 
 // Funciones principales:
 
-//Renderizar las operaciones en la tabla
+
+//Renderizar las operaciones en la tabla 
 const renderOperations = (operations) => {
   $("#operations--table-body").innerHTML = "";
-  if (operations.length) {
-    hideElement(["#section--operations-no-results"]);
-    showElement(["#section--operations--results"]);
+  if (operations.length){
+    hideElement(["#section--operations-no-results"])
+    showElement(["#section--operations--results"])
     for (const operation of operations) {
-      const categorySelected = getData("categories").find(
-        (category) => category.id === operation.category
-      );
+      const categorySelected = getData("categories").find(category => category.id === operation.category)
 
-      const amountClass =
-        operation.type === "ganancia" ? "text-green-500" : "text-red-500";
-      const amountSign = operation.type === "ganancia" ? "+$" : "-$";
+      const amountClass = operation.type === "ganancia" ? 'text-green-500' : 'text-red-500';
+      const amountSign = operation.type === "ganancia" ? '+$' : '-$';
 
       $("#operations--table-body").innerHTML += `
       <tr class="flex flex-wrap justify-between lg:flex-nowrap lg:items-center">
          <td class="w-1/2 text-base mt-4">${operation.description}</td>
-         <td class="w-1/2 text-xs mt-4 text-right lg:text-center"><span class="my-1 rounded bg-green-100 mt-4">${
-           categorySelected.categoryName
-         }</span></td>
-         <td class="hidden lg:flex lg:w-1/2 lg:text-center justify-center">${new Date(
-           operation.date
-         ).toLocaleDateString("es-ES")}</td>
-         <td class="w-1/2 text-base mt-4 lg:text-center font-bold ${amountClass}">${amountSign}${
-        operation.amount
-      }</td>
+         <td class="w-1/2 text-xs mt-4 text-right lg:text-center"><span class="my-1 rounded bg-green-100 mt-4">${categorySelected.categoryName}</span></td>
+         <td class="hidden lg:flex lg:w-1/2 lg:text-center justify-center">${new Date(operation.date).toLocaleDateString('es-ES')}</td>
+         <td class="w-1/2 text-base mt-4 lg:text-center font-bold ${amountClass}">${amountSign}${operation.amount}</td>
          <td class="w-1/2 text-right lg:text-center">
-             <button onclick="showFormEdit('${
-               operation.id
-             }')"><i class="fa-regular fa-pen-to-square text-xs mt-4 bg-green-500 text-white py-1 px-2 rounded-md ml-2 hover:bg-green-600"></i></button>
-             <button onclick="showModalDeleteOperation('${operation.id}', '${
-        operation.description
-      }')"><i class="fa-solid fa-trash text-xs mt-4 bg-red-500 text-white py-1 px-2 rounded-md ml-2 hover:bg-red-600"></i></button>
+             <button onclick="showFormEdit('${operation.id}')"><i class="fa-regular fa-pen-to-square text-xs mt-4 bg-green-500 text-white py-1 px-2 rounded-md ml-2 hover:bg-green-600"></i></button>
+             <button onclick="showModalDeleteOperation('${operation.id}', '${operation.description}')"><i class="fa-solid fa-trash text-xs mt-4 bg-red-500 text-white py-1 px-2 rounded-md ml-2 hover:bg-red-600"></i></button>
          </td>
       </tr>
-      `;
+      `
     }
-  } else {
-    showElement(["#section--operations-no-results"]);
-    hideElement(["#section--operations--results"]);
-  }
-  updateBalance();
-};
-
-//Filtros
-const filterOperations = (operations) => {
-  const typeFilter = $("#filter--type-select").value;
-  const categoryFilter = $("#category--filter-select").value;
-  const fromDateFilter = $("#date--select").value;
-  const orderFilter = $("#order--select").value;
-
-  let filteredOperations = operations;
-
-  if (typeFilter !== "Todos") {
-    filteredOperations = filteredOperations.filter((operation) => {
-      return operation.type.toLowerCase() === typeFilter.toLowerCase();
-    });
+    } else {
+      showElement(["#section--operations-no-results"])
+      hideElement(["#section--operations--results"])
+    }
+    updateBalance()
   }
 
-  if (categoryFilter !== "Todas") {
-    filteredOperations = filteredOperations.filter((operation) => {
-      const category = allCategories.find(
-        (cat) => cat.id === operation.category
-      );
-      return category && category.id === categoryFilter;
-    });
+  //Filtros
+  const filterOperations = (operations) => {
+    const typeFilter = $("#filter--type-select").value;
+    const categoryFilter = $("#category--filter-select").value;
+    const fromDateFilter = $("#date--select").value;
+    const orderFilter = $("#order--select").value;
+  
+    let filteredOperations = operations;
+  
+    if (typeFilter !== "Todos") {
+      filteredOperations = filteredOperations.filter(operation => {
+        return operation.type.toLowerCase() === typeFilter.toLowerCase();
+      });
+    }
+  
+    if (categoryFilter !== "Todas") {
+      filteredOperations = filteredOperations.filter(operation => {
+        const category = allCategories.find(cat => cat.id === operation.category);
+        return category && category.id === categoryFilter;
+      });
+    }
+  
+    if (fromDateFilter) {
+      filteredOperations = filteredOperations.filter(operation => new Date(operation.date) >= new Date(fromDateFilter));
+    }
+  
+    switch (orderFilter) {
+      case "MAS_RECIENTES":
+        filteredOperations.sort((a, b) => new Date(b.date) - new Date(a.date));
+        break;
+      case "MENOS_RECIENTES":
+        filteredOperations.sort((a, b) => new Date(a.date) - new Date(b.date));
+        break;
+      case "MAYOR_MONTO":
+        filteredOperations.sort((a, b) => b.amount - a.amount);
+        break;
+      case "MENOR_MONTO":
+        filteredOperations.sort((a, b) => a.amount - b.amount);
+        break;
+      case "A/Z":
+        filteredOperations.sort((a, b) => a.description.localeCompare(b.description));
+        break;
+      case "Z/A":
+        filteredOperations.sort((a, b) => b.description.localeCompare(a.description));
+        break;
+      default:
+        break;
+    }
+  
+    if (filteredOperations.length) {
+      renderOperations(filteredOperations);
+      updateBalance(filteredOperations);
+    } else {
+      showElement(["#section--operations-no-results"]);
+      hideElement(["#section--operations--results"]);
+      updateBalance(filteredOperations)
+    }
   }
 
-  if (fromDateFilter) {
-    filteredOperations = filteredOperations.filter(
-      (operation) => new Date(operation.date) >= new Date(fromDateFilter)
-    );
-  }
 
-  switch (orderFilter) {
-    case "MAS_RECIENTES":
-      filteredOperations.sort((a, b) => new Date(b.date) - new Date(a.date));
-      break;
-    case "MENOS_RECIENTES":
-      filteredOperations.sort((a, b) => new Date(a.date) - new Date(b.date));
-      break;
-    case "MAYOR_MONTO":
-      filteredOperations.sort((a, b) => b.amount - a.amount);
-      break;
-    case "MENOR_MONTO":
-      filteredOperations.sort((a, b) => a.amount - b.amount);
-      break;
-    case "A/Z":
-      filteredOperations.sort((a, b) =>
-        a.description.localeCompare(b.description)
-      );
-      break;
-    case "Z/A":
-      filteredOperations.sort((a, b) =>
-        b.description.localeCompare(a.description)
-      );
-      break;
-    default:
-      break;
-  }
-
-  if (filteredOperations.length) {
-    renderOperations(filteredOperations);
-    updateBalance(filteredOperations);
-  } else {
-    showElement(["#section--operations-no-results"]);
-    hideElement(["#section--operations--results"]);
-    updateBalance(filteredOperations);
-  }
-};
-
+  
+    
 //Renderizar las categorias en la tabla
-const renderCategoriesTable = (categories) => {
+const renderCategoriesTable = (categories) =>{
   const allCategories = getData("categories") || defaultCategories;
-  for (const category of allCategories) {
+  for (const category of allCategories){
+    
     $("#categories--table-body").innerHTML += `
     <tr class="flex flex-wrap justify-between lg:flex-nowrap lg:items-center">
          <td class="w-1/2 text-base mt-4">${category.categoryName}</td>
@@ -205,173 +190,152 @@ const renderCategoriesTable = (categories) => {
              <button onclick="showModalDeleteCategory('${category.id}', '${category.categoryName}')"><i class="fa-solid fa-trash text-xs mt-4 bg-red-500 text-white py-1 px-2 rounded-md ml-2 hover:bg-red-600"></i></button>
          </td>
       </tr>
-    `;
+    `
   }
-};
+  
+}
 
 //Agregar categorias
-const addCategory = () => {
-  const currentData = getData("categories");
-  currentData.push(saveCategoryInfo());
-  setData("categories", currentData);
-};
+  const addCategory = () => {
+    const currentData = getData("categories");
+    currentData.push(saveCategoryInfo())
+    setData("categories", currentData)
+  };
 
-//Mostrar formulario para editar categorias
-const showFormCategoryEdit = (categoryId) => {
-  showElement([
-    "#form--categories",
-    "#title--operation-edit",
-    "#btn--edit-category-form",
-  ]);
-  hideElement([
-    "#add--category-title",
-    "#categories--table",
-    "#btn--add-category",
-  ]);
-  $("#btn--edit-category-form").setAttribute("data-id", categoryId);
-  const categorySelected = getData("categories").find(
-    (category) => category.id === categoryId
-  );
-  $("#input--category").value = categorySelected.categoryName;
-};
+  //Mostrar formulario para editar categorias
+  const showFormCategoryEdit = (categoryId) => {
+    showElement(["#form--categories", "#title--operation-edit", "#btn--edit-category-form"]);
+    hideElement(["#add--category-title", "#categories--table", "#btn--add-category"]);
+    $("#btn--edit-category-form").setAttribute("data-id", categoryId);
+    const categorySelected = getData("categories").find(category => category.id === categoryId);
+    $("#input--category").value = categorySelected.categoryName;
+  };
 
 //Renderizar las categorias en el form
-const renderCategoriesFormOptions = (categories) => {
-  for (const category of categories) {
+const renderCategoriesFormOptions = (categories) =>{
+  for (const category of categories){
     $("#category--form-select").innerHTML += `
     <option value="${category.id}">${category.categoryName}</option>
-    `;
+    `
     $("#category--filter-select").innerHTML += `
     <option value="${category.id}">${category.categoryName}</option>
-    `;
+    `
   }
-};
+}
+
 
 //Guardar la info de las operaciones
-const saveOperationInfo = (operationId) => {
-  return {
-    id: operationId ? operationId : randomIdGenerator(),
-    description: $("#input--description").value,
-    category: $("#category--form-select").value,
-    date: $("#input--date").valueAsDate,
-    amount: $("#input--amount").valueAsNumber,
-    type: $("#input--type").value,
-  };
-};
-
-//Mostrar el formulario para editar operaciones
-const showFormEdit = (operationId) => {
-  showElement([
-    "#form--operation",
-    "#btn--edit-operation-form",
-    "#title--operation-edit",
-  ]);
-  hideElement([
-    "#section--balance",
-    "#section--filters",
-    "#section--operations--results",
-    "#section--operations-no-results",
-    "#btn--submit-operation-form",
-    "#title--operation-new",
-  ]);
-  $("#btn--edit-operation-form").setAttribute("data-id", operationId);
-  const operationSelected = getData("operations").find(
-    (operation) => operation.id === operationId
-  );
-  $("#input--description").value = operationSelected.description;
-  $("#input--category").value = operationSelected.category;
-  $("#input--date").valueAsDate = new Date(operationSelected.date);
-  $("#input--amount").valueAsNumber = operationSelected.amount;
-  $("#input--type").value = operationSelected.type;
-};
-
-//Mostrar ventana modal
-const showModalDeleteOperation = (operationId, operationDescription) => {
-  showElement(["#modal--delete"]);
-  hideElement(["#title--delete-category"]);
-  $("#btn--delete").setAttribute("data-id", operationId);
-  $(".delete--id-operation").innerText = `${operationDescription}`;
-  $("#btn--delete").addEventListener("click", () => {
-    const operationId = $("#btn--delete").getAttribute("data-id");
-    deleteOperation(operationId);
-  });
-};
-
-//Eliminar operaciones
-const deleteOperation = (operationId) => {
-  const currentData = getData("operations").filter(
-    (operation) => operation.id != operationId
-  );
-  setData("operations", currentData);
-  window.location.reload();
-};
-
-//Agregar operaciones
-const addOperation = () => {
-  const currentData = getData("operations");
-  currentData.push(saveOperationInfo());
-  setData("operations", currentData);
-};
-
-//Editar operacion
-const editOperation = () => {
-  const operationId = $("#btn--edit-operation-form").getAttribute("data-id");
-  const currentData = getData("operations").map((operation) => {
-    if (operation.id === operationId) {
-      return saveOperationInfo(operationId);
+const saveOperationInfo = (operationId) =>{
+    return {
+      id: operationId ? operationId : randomIdGenerator(),
+      description: $("#input--description").value,
+      category: $("#category--form-select").value,
+      date: $("#input--date").valueAsDate,
+      amount: $("#input--amount").valueAsNumber,
+      type: $("#input--type").value
     }
-    return operation;
-  });
-  setData("operations", currentData);
-};
+  } 
+  
+ 
+//Mostrar el formulario para editar operaciones
+const showFormEdit = (operationId) =>{
+    showElement(["#form--operation", "#btn--edit-operation-form", "#title--operation-edit"])
+    hideElement(["#section--balance", "#section--filters", "#section--operations--results", "#section--operations-no-results", "#btn--submit-operation-form", "#title--operation-new"])
+    $("#btn--edit-operation-form").setAttribute("data-id", operationId)
+    const operationSelected = getData("operations").find(operation => operation.id === operationId)
+    $("#input--description").value = operationSelected.description
+    $("#input--category").value = operationSelected.category
+    $("#input--date").valueAsDate = new Date(operationSelected.date)
+    $("#input--amount").valueAsNumber = operationSelected.amount
+    $("#input--type").value = operationSelected.type
+  }  
+
+ //Mostrar ventana modal
+const showModalDeleteOperation = (operationId, operationDescription) =>{
+    showElement(["#modal--delete"])
+    hideElement(["#title--delete-category"])
+    $("#btn--delete").setAttribute("data-id", operationId)
+    $(".delete--id-operation").innerText = `${operationDescription}`
+    $("#btn--delete").addEventListener("click", () =>{
+        const operationId = $("#btn--delete").getAttribute("data-id")
+        deleteOperation(operationId)
+   
+    })
+  }  
+
+  //Eliminar operaciones
+  const deleteOperation = (operationId) =>{
+    const currentData = getData("operations").filter(operation => operation.id != operationId)
+    setData("operations", currentData)
+    window.location.reload()
+  }
+
+  //Agregar operaciones
+  const addOperation = () =>{
+    const currentData = getData("operations")
+    currentData.push(saveOperationInfo())
+    setData("operations", currentData)
+  }
+
+  //Editar operacion
+  const editOperation = () =>{
+    const operationId = $("#btn--edit-operation-form").getAttribute("data-id")
+    const currentData = getData("operations").map(operation =>{
+      if (operation.id === operationId){
+        return saveOperationInfo(operationId)
+      }
+      return operation
+    })
+    setData("operations", currentData)
+  }
 
 //Guardar info de las categorias
-const saveCategoryInfo = (categoryId) => {
+ const saveCategoryInfo = (categoryId) => {
   return {
     id: categoryId ? categoryId : randomIdGenerator(),
     categoryName: $("#input--category").value,
   };
 };
 
-//Editar categorías
-const editCategory = () => {
-  const categoryId = $("#btn--edit-category-form").getAttribute("data-id");
-  const currentData = getData("categories").map((category) => {
-    if (category.id === categoryId) {
-      return {
-        id: categoryId,
-        categoryName: $("#input--category").value,
-      };
-    }
-    return category;
-  });
-  setData("categories", currentData);
-};
+  
 
-//Mostrar ventana modal para eliminar categorias
-const showModalDeleteCategory = (categoryId, categoryName) => {
-  showElement(["#modal--delete", "#title--delete-category"]);
-  hideElement(["#title--delete-operation"]);
-  $("#btn--delete").setAttribute("data-id", categoryId);
-  $(".delete--id-category").innerText = `${categoryName}`;
-  $("#btn--delete").addEventListener("click", () => {
-    const categoryId = $("#btn--delete").getAttribute("data-id");
-    deleteCategory(categoryId);
-  });
-};
+    //Editar categorías
+    const editCategory = () => {
+      const categoryId = $("#btn--edit-category-form").getAttribute("data-id");
+      const currentData = getData("categories").map(category => {
+        if (category.id === categoryId) {
+          return {
+            id: categoryId,
+            categoryName: $("#input--category").value
+          };
+        }
+        return category;
+      });
+      setData("categories", currentData);
+    };
+
+     //Mostrar ventana modal para eliminar categorias
+const showModalDeleteCategory = (categoryId, categoryName) =>{
+  showElement(["#modal--delete", "#title--delete-category"])
+  hideElement(["#title--delete-operation"])
+  $("#btn--delete").setAttribute("data-id", categoryId)
+  $(".delete--id-category").innerText = `${categoryName}`
+  $("#btn--delete").addEventListener("click", () =>{
+      const categoryId = $("#btn--delete").getAttribute("data-id")
+      deleteCategory(categoryId)
+ 
+  })
+} 
 
 const deleteCategory = (categoryId) => {
   const allCategories = getData("categories") || defaultCategories;
 
-  const currentCategories = allCategories.filter(
-    (category) => category.id !== categoryId
-  );
+  const currentCategories = allCategories.filter(category => category.id !== categoryId);
 
   setData("categories", currentCategories);
 
-  const currentData = getData("operations").filter(
-    (operation) => operation.category !== categoryId
-  );
+
+  const currentData = getData("operations").filter(operation => operation.category !== categoryId);
   setData("operations", currentData);
 
   window.location.reload();
@@ -401,17 +365,12 @@ const updateBalance = (operations) => {
     balanceColorClass = "text-red-500";
   }
 
-  $("#balance--total").classList.remove(
-    "text-black",
-    "text-green-500",
-    "text-red-500"
-  );
+  $("#balance--total").classList.remove("text-black", "text-green-500", "text-red-500");
   $("#balance--total").classList.add(balanceColorClass);
 
   $("#balance--earning").innerText = `+$${totalEarnings}`;
   $("#balance--expense").innerText = `-$${totalExpenses}`;
-  $("#balance--total").innerText =
-    totalBalance >= 0 ? `+$${totalBalance}` : `-$${Math.abs(totalBalance)}`;
+  $("#balance--total").innerText = totalBalance >= 0 ? `+$${totalBalance}` : `-$${Math.abs(totalBalance)}`;
 
   if (allOperations.length === 0) {
     $("#balance--earning").innerText = `+$0`;
@@ -420,73 +379,76 @@ const updateBalance = (operations) => {
   }
 };
 
+
 //Reportes
 //Categoría con mayor ganancia
-const higherEarningsCategory = (operations) => {
+const higherEarningsCategory = (operations) =>  {
   const allOperations = getData("operations") || [];
   const allCategories = getData("categories") || [];
-  const earningsByCategory = {};
+const earningsByCategory = {};
 
-  for (const operation of allOperations) {
-    if (operation.type === "ganancia") {
-      if (earningsByCategory[operation.category]) {
-        earningsByCategory[operation.category] += operation.amount;
-      } else {
-        earningsByCategory[operation.category] = operation.amount;
-      }
+
+for (const operation of allOperations) {
+  if (operation.type === "ganancia") {
+    if (earningsByCategory[operation.category]) {
+      earningsByCategory[operation.category] += operation.amount;
+    } else {
+      earningsByCategory[operation.category] = operation.amount;
     }
   }
+}
 
-  let highestEarningCategory = null;
-  let highestEarningAmount = 0;
 
-  for (const categoryID in earningsByCategory) {
-    const categoryName = allCategories.find(
-      (category) => category.id === categoryID
-    )?.categoryName;
+let highestEarningCategory = null;
+let highestEarningAmount = 0;
 
-    if (earningsByCategory[categoryID] > highestEarningAmount) {
-      highestEarningAmount = earningsByCategory[categoryID];
-      highestEarningCategory = categoryName;
-    }
+for (const categoryID in earningsByCategory) {
+  const categoryName = allCategories.find(category => category.id === categoryID)?.categoryName;
+
+  if (earningsByCategory[categoryID] > highestEarningAmount) {
+    highestEarningAmount = earningsByCategory[categoryID];
+    highestEarningCategory = categoryName;
   }
+}
 
-  $("#higher--earnings-category").innerText = highestEarningCategory;
-  $("#higher--earnings-amount").innerText = `+$${highestEarningAmount}`;
+$("#higher--earnings-category").innerText = highestEarningCategory
+$("#higher--earnings-amount").innerText = `+$${highestEarningAmount}`
+
 };
 
 //Categoría con mayor gasto
-const higherExpenseCategory = (operations) => {
+const higherExpenseCategory = (operations) =>  {
   const allOperations = getData("operations") || [];
   const allCategories = getData("categories") || [];
-  const expensesByCategory = {};
+const expensesByCategory = {};
 
-  for (const operation of allOperations) {
-    if (operation.type === "gasto") {
-      if (expensesByCategory[operation.category]) {
-        expensesByCategory[operation.category] += operation.amount;
-      } else {
-        expensesByCategory[operation.category] = operation.amount;
-      }
+
+for (const operation of allOperations) {
+  if (operation.type === "gasto") {
+    if (expensesByCategory[operation.category]) {
+      expensesByCategory[operation.category] += operation.amount;
+    } else {
+      expensesByCategory[operation.category] = operation.amount;
     }
   }
+}
 
-  let highestExpenseCategory = null;
-  let highestExpenseAmount = 0;
 
-  for (const categoryID in expensesByCategory) {
-    const categoryName = allCategories.find(
-      (category) => category.id === categoryID
-    )?.categoryName;
+let highestExpenseCategory = null;
+let highestExpenseAmount = 0;
 
-    if (expensesByCategory[categoryID] > highestExpenseAmount) {
-      highestExpenseAmount = expensesByCategory[categoryID];
-      highestExpenseCategory = categoryName;
-    }
+for (const categoryID in expensesByCategory) {
+  const categoryName = allCategories.find(category => category.id === categoryID)?.categoryName;
+
+  if (expensesByCategory[categoryID] > highestExpenseAmount) {
+    highestExpenseAmount = expensesByCategory[categoryID];
+    highestExpenseCategory = categoryName;
   }
+}
 
-  $("#higher--expenses-category").innerText = highestExpenseCategory;
-  $("#higher--expenses-amount").innerText = `-$${highestExpenseAmount}`;
+$("#higher--expenses-category").innerText = highestExpenseCategory
+$("#higher--expenses-amount").innerText = `-$${highestExpenseAmount}`
+
 };
 
 //Categoría con mayor balance
@@ -500,9 +462,9 @@ const highestBalanceCategory = () => {
 
     if (type === "ganancia" || type === "gasto") {
       if (balancesByCategory[category]) {
-        balancesByCategory[category] += type === "ganancia" ? amount : -amount;
+        balancesByCategory[category] += (type === "ganancia" ? amount : -amount);
       } else {
-        balancesByCategory[category] = type === "ganancia" ? amount : -amount;
+        balancesByCategory[category] = (type === "ganancia" ? amount : -amount);
       }
     }
   }
@@ -511,9 +473,7 @@ const highestBalanceCategory = () => {
   let highestBalanceAmount = 0;
 
   for (const categoryID in balancesByCategory) {
-    const categoryName = allCategories.find(
-      (category) => category.id === categoryID
-    )?.categoryName;
+    const categoryName = allCategories.find(category => category.id === categoryID)?.categoryName;
 
     if (balancesByCategory[categoryID] > highestBalanceAmount) {
       highestBalanceAmount = balancesByCategory[categoryID];
@@ -521,11 +481,11 @@ const highestBalanceCategory = () => {
     }
   }
 
+
   $("#higher--balance-category").innerText = highestBalanceCategory || "N/A";
-  $("#higher--balance-amount").innerText = `$${highestBalanceAmount.toFixed(
-    2
-  )}`;
+  $("#higher--balance-amount").innerText = `$${highestBalanceAmount.toFixed(2)}`;
 };
+
 
 //Mes con mayor ganancia
 const higherEarningsMonth = () => {
@@ -535,9 +495,7 @@ const higherEarningsMonth = () => {
   for (const operation of allOperations) {
     if (operation.type === "ganancia") {
       const operationDate = new Date(operation.date);
-      const monthYear = `${
-        operationDate.getMonth() + 1
-      }-${operationDate.getFullYear()}`;
+      const monthYear = `${operationDate.getMonth() + 1}-${operationDate.getFullYear()}`;
 
       if (earningsByMonth[monthYear]) {
         earningsByMonth[monthYear] += operation.amount;
@@ -560,10 +518,9 @@ const higherEarningsMonth = () => {
   }
 
   $("#higher--earnings-month").innerText = highestEarningMonth || "N/A";
-  $(
-    "#higher--earnings-month-amount"
-  ).innerText = `+$${highestEarningAmount.toFixed(2)}`;
+  $("#higher--earnings-month-amount").innerText = `+$${highestEarningAmount.toFixed(2)}`;
 };
+
 
 //Mes con mayor gasto
 const higherExpenseMonth = () => {
@@ -573,9 +530,7 @@ const higherExpenseMonth = () => {
   for (const operation of allOperations) {
     if (operation.type === "gasto") {
       const operationDate = new Date(operation.date);
-      const monthYear = `${
-        operationDate.getMonth() + 1
-      }-${operationDate.getFullYear()}`;
+      const monthYear = `${operationDate.getMonth() + 1}-${operationDate.getFullYear()}`;
 
       if (expensesByMonth[monthYear]) {
         expensesByMonth[monthYear] += operation.amount;
@@ -622,12 +577,11 @@ const renderByCategories = () => {
     }
   }
 
-  cleanContainer("#table--totals-categories");
+  cleanContainer("#table--totals-categories")
+
 
   for (const categoryID in totalsByCategory) {
-    const categoryName = allCategories.find(
-      (category) => category.id === categoryID
-    )?.categoryName;
+    const categoryName = allCategories.find(category => category.id === categoryID)?.categoryName;
     const { ganancia, gasto } = totalsByCategory[categoryID];
     const balance = ganancia - gasto;
 
@@ -636,9 +590,7 @@ const renderByCategories = () => {
         <td class="w-1/4 mr-1 text-left">${categoryName || "N/A"}</td>
         <td class="w-1/4 mr-1 text-green-500 text-center">+$${ganancia}</td>
         <td class="w-1/4 mr-1 text-red-500 text-center">-$${gasto}</td>
-        <td class="w-1/4 mr-1 text-center">${
-          balance >= 0 ? `+$${balance}` : `$${balance}`
-        }</td>
+        <td class="w-1/4 mr-1 text-center">${balance >= 0 ? `+$${balance}` : `$${balance}`}</td>
       </tr>
     `;
   }
@@ -654,9 +606,7 @@ const renderByMonth = () => {
 
     if (type === "ganancia" || type === "gasto") {
       const operationDate = new Date(date);
-      const monthYear = `${
-        operationDate.getMonth() + 1
-      }-${operationDate.getFullYear()}`;
+      const monthYear = `${operationDate.getMonth() + 1}-${operationDate.getFullYear()}`;
 
       if (totalsByMonth[monthYear]) {
         totalsByMonth[monthYear][type] += amount;
@@ -680,135 +630,117 @@ const renderByMonth = () => {
         <td class="w-1/4 mr-1 text-left">${monthYear}</td>
         <td class="w-1/4 mr-1 text-green-500 text-center">+$${ganancia}</td>
         <td class="w-1/4 mr-1 text-red-500 text-center">-$${gasto}</td>
-        <td class="w-1/4 mr-1 text-center">${
-          balance >= 0 ? `+$${balance}` : `-$${balance}`
-        }</td>
+        <td class="w-1/4 mr-1 text-center">${balance >= 0 ? `+$${balance}` : `-$${balance}`}</td>
       </tr>
     `;
   }
 };
 
-const showReports = (operations) => {
+const showReports = (operations) =>{
   const allOperations = getData("operations") || [];
-  if (allOperations.length >= 2) {
-    showElement(["#reports--results"]);
-    hideElement(["#reports--no-results"]);
-  } else {
-    showElement(["#reports--no-results"]);
-    hideElement(["#reports--results"]);
+  if(allOperations.length >= 2){
+    showElement(["#reports--results"])
+    hideElement(["#reports--no-results"])
+  } else{
+    showElement(["#reports--no-results"])
+    hideElement(["#reports--results"])
   }
-};
+}
+
 
 //Funcion inicializar la app
-const initializeApp = () => {
-  setData("operations", allOperations);
-  setData("categories", allCategories);
-  setFilterDate();
-  filterOperations(allOperations);
-  renderCategoriesTable(allCategories);
-  renderCategoriesFormOptions(allCategories);
-  updateBalance(allOperations);
-  showReports(allOperations);
-  higherEarningsCategory(allOperations);
-  higherExpenseCategory(allOperations);
-  highestBalanceCategory(allOperations);
-  higherEarningsMonth(allOperations);
-  higherExpenseMonth(allOperations);
-  renderByCategories(allOperations);
-  renderByMonth(allOperations);
+const initializeApp = () =>{
+    setData("operations", allOperations)
+    setData("categories", allCategories)
+    setFilterDate()
+    filterOperations(allOperations)
+    renderCategoriesTable(allCategories)
+    renderCategoriesFormOptions(allCategories)
+    updateBalance(allOperations);
+    showReports(allOperations)
+    higherEarningsCategory(allOperations)
+    higherExpenseCategory(allOperations)
+    highestBalanceCategory(allOperations)
+    higherEarningsMonth(allOperations)
+    higherExpenseMonth(allOperations)
+    renderByCategories(allOperations)
+    renderByMonth(allOperations)
+
 
   // EVENTOS
   //Abrir menu responsive
-  $("#btn--open-nav").addEventListener("click", () => {
-    showElement(["#nav--bar", "#btn--close-nav"]);
-    hideElement(["#btn--open-nav"]);
-  });
-
+  $("#btn--open-nav").addEventListener("click", ()=>{
+    showElement(["#nav--bar", "#btn--close-nav"])
+    hideElement(["#btn--open-nav"])
+  })
+  
   //Cerrar menu responsive
-  $("#btn--close-nav").addEventListener("click", () => {
-    hideElement(["#nav--bar", "#btn--close-nav"]);
-    showElement(["#btn--open-nav"]);
-  });
+  $("#btn--close-nav").addEventListener("click", ()=>{
+    hideElement(["#nav--bar", "#btn--close-nav"])
+    showElement(["#btn--open-nav"])
+  })
 
   //Ocultar filtros
-  $("#btn--hide-filters").addEventListener("click", (e) => {
-    e.preventDefault();
-    hideElement(["#all--filters", "#btn--hide-filters"]);
-    showElement(["#btn--show-filters"]);
-  });
+  $("#btn--hide-filters").addEventListener("click", (e) =>{
+    e.preventDefault()
+    hideElement(["#all--filters", "#btn--hide-filters"])
+    showElement(["#btn--show-filters"])
+  })
 
   //Mostrar filtros
-  $("#btn--show-filters").addEventListener("click", (e) => {
-    e.preventDefault();
-    showElement(["#all--filters", "#btn--hide-filters"]);
-    hideElement(["#btn--show-filters"]);
-  });
+  $("#btn--show-filters").addEventListener("click", (e) =>{
+    e.preventDefault()
+    showElement(["#all--filters", "#btn--hide-filters"])
+    hideElement(["#btn--show-filters"])
+  })
 
   //Filtros
-  $("#section--filters").addEventListener("change", () => {
-    const operationsToFilter = getData("operations");
-    filterOperations(operationsToFilter);
-  });
+  $("#section--filters").addEventListener("change", () =>{
+    const operationsToFilter = getData("operations")
+    filterOperations(operationsToFilter)
+  })
 
   //Mostrar seccion categorias
-  $("#btn--go--categories").addEventListener("click", () => {
-    hideElement([
-      "#section--balance",
-      "#section--filters",
-      "#section--operations--results",
-      "#section--operations-no-results",
-      "#section--reports",
-    ]);
-    showElement(["#section--categories"]);
-  });
+  $("#btn--go--categories").addEventListener("click", () =>{
+    hideElement(["#section--balance", "#section--filters", "#section--operations--results", "#section--operations-no-results", "#section--reports"])
+    showElement(["#section--categories"])
+  })
 
   //Cerrar ventana modal
-  $("#btn--close-modal").addEventListener("click", () => {
-    hideElement(["#modal--delete"]);
-  });
+  $("#btn--close-modal").addEventListener("click", () =>{
+    hideElement(["#modal--delete"])
+  })
 
   //Cerrar ventana modal bis
-  $("#btn--close-modal-bis").addEventListener("click", () => {
-    hideElement(["#modal--delete"]);
-  });
+  $("#btn--close-modal-bis").addEventListener("click", () =>{
+    hideElement(["#modal--delete"])
+  })
 
   //Abrir formulario nueva operacion
-  $("#btn--add-operation").addEventListener("click", () => {
-    showElement(["#form--operation"]);
-    hideElement([
-      "#section--balance",
-      "#section--filters",
-      "#section--operations--results",
-      "#section--operations-no-results",
-      "#btn--edit-operation-form",
-    ]);
-  });
+  $("#btn--add-operation").addEventListener("click", () =>{
+    showElement(["#form--operation"])
+    hideElement(["#section--balance", "#section--filters", "#section--operations--results", "#section--operations-no-results", "#btn--edit-operation-form"])
+  })
 
-  //Abrir formulario nueva operacion bis
-  $("#btn--add-operation-clon").addEventListener("click", () => {
-    showElement(["#form--operation"]);
-    hideElement([
-      "#section--balance",
-      "#section--filters",
-      "#section--operations--results",
-      "#section--operations-no-results",
-      "#btn--edit-operation-form",
-    ]);
-  });
-
+   //Abrir formulario nueva operacion bis
+   $("#btn--add-operation-clon").addEventListener("click", () =>{
+    showElement(["#form--operation"])
+    hideElement(["#section--balance", "#section--filters", "#section--operations--results", "#section--operations-no-results", "#btn--edit-operation-form"])
+  })
+  
   //Agregar nueva operación
-  $("#btn--submit-operation-form").addEventListener("click", (e) => {
-    e.preventDefault();
-    addOperation();
-    $("#form").reset();
-  });
-
+  $("#btn--submit-operation-form").addEventListener("click", (e) =>{
+    e.preventDefault()
+    addOperation()
+    $("#form").reset()
+  })
+  
   //Editar las operaciones
-  $("#btn--edit-operation-form").addEventListener("click", (e) => {
-    e.preventDefault();
-    editOperation();
-    window.location.reload();
-  });
+  $("#btn--edit-operation-form").addEventListener("click", (e) =>{
+    e.preventDefault()
+    editOperation()
+    window.location.reload()
+  })
 
   //Agregar categorías
   $("#btn--add-category").addEventListener("click", () => {
@@ -817,27 +749,19 @@ const initializeApp = () => {
   });
 
   //Editar categorías
-  $("#btn--edit-category-form").addEventListener("click", (e) => {
-    e.preventDefault();
-    editCategory();
-    window.location.reload();
-  });
+  $("#btn--edit-category-form").addEventListener("click", (e) =>{
+    e.preventDefault()
+    editCategory()
+    window.location.reload()
+  })
 
   //Abrir ventana reportes
-  $("#btn--go--reports").addEventListener("click", () => {
-    hideElement([
-      "#section--main-balance",
-      "#section--balance",
-      "#section--filters",
-      "#form--operation",
-      "#section--categories",
-      "#section--operations--results",
-      "#section--operations-no-results",
-    ]);
-    showElement(["#section--reports"]);
-  });
+  $("#btn--go--reports").addEventListener("click", () =>{
+    hideElement(["#section--main-balance", "#section--balance", "#section--filters", "#form--operation", "#section--categories", "#section--operations--results", "#section--operations-no-results"])
+    showElement(["#section--reports"])
+  })
 
   filterOperations(allOperations);
-};
+  }  
 
-window.addEventListener("load", initializeApp);
+  window.addEventListener("load", initializeApp)   
