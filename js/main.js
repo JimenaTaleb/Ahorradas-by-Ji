@@ -364,19 +364,22 @@ const updateBalance = (operations) => {
 
   const totalBalance = totalEarnings - totalExpenses;
 
-  if(totalBalance === 0){
-    $("#balance--total").style.color = "black"
-  } else if(totalBalance > 0){
-    $("#balance--total").style.color = "bg-green-500"
-  } else if(totalBalance < 0){
-    $("#balance--total").style.color = "bg-red-500"
+  let balanceColorClass = "text-black";
+
+  if (totalBalance > 0) {
+    balanceColorClass = "text-green-500";
+  } else if (totalBalance < 0) {
+    balanceColorClass = "text-red-500";
   }
 
+  // Aplicar la clase al elemento
+  $("#balance--total").classList.remove("text-black", "text-green-500", "text-red-500");
+  $("#balance--total").classList.add(balanceColorClass);
 
+  // Actualizar el contenido del elemento
   $("#balance--earning").innerText = `+$${totalEarnings}`;
   $("#balance--expense").innerText = `-$${totalExpenses}`;
   $("#balance--total").innerText = totalBalance >= 0 ? `+$${totalBalance}` : `-$${Math.abs(totalBalance)}`;
-
 
   if (allOperations.length === 0) {
     $("#balance--earning").innerText = `+$0`;
