@@ -443,7 +443,6 @@ const deleteCategory = (categoryId) => {
   );
   setData("operations", currentData);
   renderCategoriesTable(currentCategories)
-  // window.location.reload();
 };
 
 //Mostrar ventana modal para eliminar categorias
