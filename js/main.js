@@ -346,22 +346,6 @@ const deleteOperation = (operationId) => {
   window.location.reload();
 };
 
-//Renderizar las categorias en la tabla
-const renderCategoriesTable = (categories) => {
-  const allCategories = getData("categories") || defaultCategories;
-  for (const category of allCategories) {
-    $("#categories--table-body").innerHTML += `
-    <tr class="flex flex-wrap justify-between lg:flex-nowrap lg:items-center">
-         <td class="w-1/2 text-base mt-4">${category.categoryName}</td>
-         <td class="w-1/2 text-right lg:text-right">
-             <button onclick="showFormCategoryEdit('${category.id}')"><i class="fa-regular fa-pen-to-square text-xs mt-4 bg-green-500 text-white py-1 px-2 rounded-md ml-2 hover:bg-green-600"></i></button>
-             <button onclick="showModalDeleteCategory('${category.id}', '${category.categoryName}')"><i class="fa-solid fa-trash text-xs mt-4 bg-red-500 text-white py-1 px-2 rounded-md ml-2 hover:bg-red-600"></i></button>
-         </td>
-      </tr>
-    `;
-  }
-};
-
 //Categorias
 //Guardar info de las categorias
 const saveCategoryInfo = (categoryId) => {
@@ -376,6 +360,7 @@ const addCategory = () => {
   const currentData = getData("categories");
   currentData.push(saveCategoryInfo());
   setData("categories", currentData);
+  renderCategoriesTable(currentData)
   renderCategoriesFormOptions(currentData);
 };
 
@@ -387,6 +372,23 @@ const renderCategoriesFormOptions = (categories) => {
     `;
     $("#category--filter-select").innerHTML += `
     <option value="${category.id}">${category.categoryName}</option>
+    `;
+  }
+};
+
+//Renderizar las categorias en la tabla
+const renderCategoriesTable = (categories) => {
+  cleanContainer(["#categories--table-body"])
+  const allCategories = getData("categories") || defaultCategories;
+  for (const category of allCategories) {
+    $("#categories--table-body").innerHTML += `
+    <tr class="flex flex-wrap justify-between lg:flex-nowrap lg:items-center">
+         <td class="w-1/2 text-base mt-4">${category.categoryName}</td>
+         <td class="w-1/2 text-right lg:text-right">
+             <button onclick="showFormCategoryEdit('${category.id}')"><i class="fa-regular fa-pen-to-square text-xs mt-4 bg-green-500 text-white py-1 px-2 rounded-md ml-2 hover:bg-green-600"></i></button>
+             <button onclick="showModalDeleteCategory('${category.id}', '${category.categoryName}')"><i class="fa-solid fa-trash text-xs mt-4 bg-red-500 text-white py-1 px-2 rounded-md ml-2 hover:bg-red-600"></i></button>
+         </td>
+      </tr>
     `;
   }
 };
@@ -451,8 +453,6 @@ const deleteCategory = (categoryId) => {
     (operation) => operation.category !== categoryId
   );
   setData("operations", currentData);
-
-  window.location.reload();
 };
 
 
@@ -727,7 +727,9 @@ const renderByCategories = (getTotalsByCategory) => {
         <td class="w-1/4 mr-1 text-left">${categoryName}</td>
         <td class="w-1/4 mr-1 text-green-500 text-center">+$${ganancia}</td>
         <td class="w-1/4 mr-1 text-red-500 text-center">-$${gasto}</td>
-        <td class="w-1/4 mr-1 text-center">${balance >= 0 ? `+$${balance}` : `$${balance}`}</td>
+        <td class="w-1/4 mr-1 text-center">${
+          balance >= 0 ? `+$${balance}` : `-$${balance}`
+        }</td>
       </tr>
     `;
   }
@@ -876,6 +878,7 @@ const initializeApp = () => {
       "#section--operations--results",
       "#section--operations-no-results",
       "#section--reports",
+      "#form--operation"
     ]);
     showElement(["#section--categories"]);
   });
@@ -933,7 +936,7 @@ const initializeApp = () => {
   //Agregar categorías
   $("#btn--add-category").addEventListener("click", () => {
     addCategory();
-    window.location.reload();
+    $("#input--category").value = ""
   });
 
   //Editar categorías
