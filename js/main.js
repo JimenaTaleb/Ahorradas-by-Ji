@@ -325,14 +325,14 @@ const editOperation = () => {
 };
 
 
-//Mostrar ventana modal
+//Mostrar ventana modal eliminar operacion
 const showModalDeleteOperation = (operationId, operationDescription) => {
-  showElement(["#modal--delete"]);
-  hideElement(["#title--delete-category"]);
-  $("#btn--delete").setAttribute("data-id", operationId);
+  showElement(["#modal--delete", "#btn--delete-operation"]);
+  hideElement(["#title--delete-category", "#btn--delete-category"]);
+  $("#btn--delete-operation").setAttribute("data-id", operationId);
   $(".delete--id-operation").innerText = `${operationDescription}`;
-  $("#btn--delete").addEventListener("click", () => {
-    const operationId = $("#btn--delete").getAttribute("data-id");
+  $("#btn--delete-operation").addEventListener("click", () => {
+    const operationId = $("#btn--delete-operation").getAttribute("data-id");
     deleteOperation(operationId);
   });
 };
@@ -425,18 +425,7 @@ const editCategory = () => {
     return category;
   });
   setData("categories", currentData);
-};
-
-//Mostrar ventana modal para eliminar categorias
-const showModalDeleteCategory = (categoryId, categoryName) => {
-  showElement(["#modal--delete", "#title--delete-category"]);
-  hideElement(["#title--delete-operation"]);
-  $("#btn--delete").setAttribute("data-id", categoryId);
-  $(".delete--id-category").innerText = `${categoryName}`;
-  $("#btn--delete").addEventListener("click", () => {
-    const categoryId = $("#btn--delete").getAttribute("data-id");
-    deleteCategory(categoryId);
-  });
+  renderCategoriesTable(currentData)
 };
 
 //Eliminar categorías
@@ -453,8 +442,21 @@ const deleteCategory = (categoryId) => {
     (operation) => operation.category !== categoryId
   );
   setData("operations", currentData);
+  renderCategoriesTable(currentCategories)
+  // window.location.reload();
 };
 
+//Mostrar ventana modal para eliminar categorias
+const showModalDeleteCategory = (categoryId, categoryName) => {
+  showElement(["#modal--delete", "#title--delete-category", "#btn--delete-category"]);
+  hideElement(["#title--delete-operation", "#btn--delete-operation"]);
+  $("#btn--delete-category").setAttribute("data-id", categoryId);
+  $(".delete--id-category").innerText = `${categoryName}`;
+  $("#btn--delete-category").addEventListener("click", () => {
+    const categoryId = $("#btn--delete-category").getAttribute("data-id");
+    deleteCategory(categoryId);
+  });
+};
 
 //Reportes
 //Categoría con mayor ganancia
@@ -939,12 +941,18 @@ const initializeApp = () => {
     $("#input--category").value = ""
   });
 
-  //Editar categorías
+  //Editar categorias
   $("#btn--edit-category-form").addEventListener("click", (e) => {
     e.preventDefault();
     editCategory();
     window.location.reload();
   });
+
+
+  //Eliminar categorías
+  $("#btn--delete-category").addEventListener("click", () =>{
+    hideElement(["#modal--delete"])
+  })
 
   //Abrir ventana reportes
   $("#btn--go--reports").addEventListener("click", () => {
